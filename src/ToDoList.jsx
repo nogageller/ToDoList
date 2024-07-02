@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import Typography from '@mui/material/Typography';
-//import Button from '@mui/material/Button'
 import AddTaskDialog from './AddTaskDialog';
 import TaskLists from './TaskLists';
 
