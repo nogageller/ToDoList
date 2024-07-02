@@ -4,6 +4,7 @@ import Task from './Task';
 import Typography from '@mui/material/Typography';
 //import Button from '@mui/material/Button'
 import AddTaskDialog from './AddTaskDialog';
+import TaskLists from './TaskLists';
 
 const ToDoList = () => {
 
@@ -30,7 +31,7 @@ const ToDoList = () => {
                 task.id === updatedTask.id ? updatedTask : task
             );
             setTasks(updatedTasks);
-        } 
+        }
         else {
             // Add new task
             updatedTask.id = uuidv4();
@@ -49,7 +50,7 @@ const ToDoList = () => {
         const isCheckedBefore = updatedTasks[index].isChecked
         updatedTasks[index] = {
             ...updatedTasks[index],
-            isChecked: isCheckedBefore ? false: true,
+            isChecked: isCheckedBefore ? false : true,
         };
         setTasks(updatedTasks);
     }
@@ -81,19 +82,12 @@ const ToDoList = () => {
 
             <div><br></br></div>
 
-            <div className='tasksContainer'>
-                {tasks?.map((task, index) =>
-                    <React.Fragment key={task.id}>
-                        <Task
-                            task={task}
-                            index={index}
-                            deleteTask={deleteTask}
-                            onEdit={handleDialogClickOpen}
-                            onCheck={handleCheckTask}
-                        />
-                    </React.Fragment>
-                )}
-            </div>
+            <TaskLists
+                tasks={tasks}
+                deleteTask={deleteTask}
+                handleDialogClickOpen={handleDialogClickOpen}
+                handleCheckTask={handleCheckTask}
+            />
 
         </div>
     )
