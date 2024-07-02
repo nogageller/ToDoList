@@ -9,9 +9,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import { v4 as uuidv4 } from 'uuid';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
 const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
+
+    const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 
     const [formData, setFormData] = useState({
         id: null,
@@ -23,19 +26,27 @@ const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'priority'){
+        if (name === 'priority') {
             setFormData({
                 ...formData,
                 priority: parseInt(value)
             })
         }
-        else{
+        else {
             setFormData({
                 ...formData,
                 [name]: value,
             });
         }
     };
+
+    const handleAutoCompleteInput = (e, value) => {
+        setFormData({
+            ...formData,
+            ['subject']: value,
+        });
+
+    }
 
     const handleSave = () => {
         onSave(formData);
@@ -53,7 +64,7 @@ const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
             });
         } else {
             setFormData({
-                id: uuidv4(), 
+                id: uuidv4(),
                 name: '',
                 subject: '',
                 priority: 0,
@@ -65,7 +76,7 @@ const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
     return (
         <>
             <Dialog className='dialog' open={open} onClose={handleClose} fullWidth >
-                <DialogTitle className='dialog-title'>{editedTask instanceof Event ? 'Add New Task' : 'Edit Task'}</DialogTitle >
+                <DialogTitle className='dialog-title'>{editedTask ? 'Add New Task' : 'Edit Task'}</DialogTitle >
                 <DialogContent className='dialog-content'>
                     <div className='taskInput'>
                         <TextField
@@ -81,22 +92,16 @@ const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
                         />
                     </div>
                     <div className='subjectInput'>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select-standard"
-                            value={formData.subject || ''}
-                            onChange={handleChange}
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={subjectOptions}
+                            sx={{ width: 300 }}
+                            onChange={handleAutoCompleteInput}
                             name='subject'
-                        >
-                            <MenuItem value="" disabled>
-                                Select Task Subject
-                            </MenuItem>
-                            <MenuItem value="Personal">Personal</MenuItem>
-                            <MenuItem value="Work">Work</MenuItem>
-                            <MenuItem value="Study">Study</MenuItem>
-                            <MenuItem value="Shopping">Shopping</MenuItem>
-                            <MenuItem value="Health">Health</MenuItem>
-                        </Select>
+                            value={formData.subject || null}
+                            renderInput={(params) => <TextField {...params} label="Subject" />}
+                        />
                     </div>
                     <Box className='boxContainer'
                         sx={{

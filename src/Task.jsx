@@ -14,6 +14,8 @@ const Task = ({ key, task, index, deleteTask, onEdit, onCheck }) => {
         onCheck(index)
     }
 
+    const handleEditClicked = () => onEdit(task)
+
     return (
         <>
             <div key={key} className='task'>
@@ -33,7 +35,7 @@ const Task = ({ key, task, index, deleteTask, onEdit, onCheck }) => {
                         <span className={className}>{task.name}</span>
                         <div className='action-buttonsDiv'>
                             <button className='delete-button' onClick={() => deleteTask(index)}></button>
-                            <button className='edit-button' disabled={task.isChecked} onClick={() => onEdit(task)}></button>
+                            <button className='edit-button' disabled={task.isChecked} onClick={handleEditClicked}></button>
                         </div>
                         <br></br>
                     </div>
