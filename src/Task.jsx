@@ -3,6 +3,9 @@ import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Task = ({ key, task, index, deleteTask, onEdit, onCheck }) => {
 
@@ -34,8 +37,22 @@ const Task = ({ key, task, index, deleteTask, onEdit, onCheck }) => {
                         />
                         <span className={className}>{task.name}</span>
                         <div className='action-buttonsDiv'>
-                            <button className='delete-button' onClick={() => deleteTask(index)}></button>
-                            <button className='edit-button' disabled={task.isChecked} onClick={handleEditClicked}></button>
+                            <IconButton
+                                className='delete-button'
+                                aria-label="delete"
+                                onClick={() => deleteTask(index)}
+                                sx={{ color: 'white' }}
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                                className='edit-button'
+                                aria-label="delete"
+                                onClick={handleEditClicked}
+                                sx={{ color: 'white' }}
+                            >
+                                <EditIcon />
+                            </IconButton>
                         </div>
                         <br></br>
                     </div>

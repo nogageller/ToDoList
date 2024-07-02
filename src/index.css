@@ -83,9 +83,8 @@ li {
 }
 
 .delete-button {
-  width: 25px;
-  height: 25px;
-  background-image: url(assets/deleteButton.png);
+  width: 30px;
+  height: 35px;
   border-radius: 5px;
 }
 
@@ -102,9 +101,8 @@ li {
 }
 
 .edit-button {
-  width: 25px;
-  height: 28px;
-  background-image: url(assets/editIcon.png);
+  width: 27px;
+  height: 25px;
   border-radius: 5px;
 }
 
