@@ -3,10 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import Typography from '@mui/material/Typography';
 import AddTaskDialog from './AddTaskDialog';
 import TaskLists from './TaskLists';
+import { useSnackbar } from 'notistack';
 
 const ToDoList = () => {
 
     const intialListLocalStorage = JSON.parse(localStorage.getItem('myList'));
+    const { enqueueSnackbar } = useSnackbar();
 
     const [open, setOpen] = useState(false);
     const [tasks, setTasks] = useState(intialListLocalStorage || []);
@@ -41,6 +43,7 @@ const ToDoList = () => {
     const deleteTask = (index) => {
         const updatedTasks = tasks.filter((_, i) => i !== index);
         setTasks(updatedTasks);
+        handleSnackbarClick('delete');
     }
 
     const handleCheckTask = (index) => {
@@ -52,6 +55,15 @@ const ToDoList = () => {
         };
         setTasks(updatedTasks);
     }
+
+    const handleSnackbarClick = (action) => {
+        if (action === 'add') {
+            enqueueSnackbar('Task added successfully!', { variant: 'success' });
+        }
+        else if (action === 'delete') {
+            enqueueSnackbar('Task deleted!', { variant: 'error' });
+        }
+    };
 
     useEffect(() => {
         localStorage.setItem('myList', JSON.stringify(tasks));
@@ -76,6 +88,7 @@ const ToDoList = () => {
                 handleClose={handleDialogClose}
                 onSave={saveTask}
                 editedTask={editedTask}
+                handleSnackbarClick={handleSnackbarClick}
             />
 
             <div><br></br></div>

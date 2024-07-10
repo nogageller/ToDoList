@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Autocomplete from '@mui/material/Autocomplete';
 
 
-const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
+const AddTaskDialog = ({ open, handleClose, onSave, editedTask, handleSnackbarClick }) => {
 
     const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 
@@ -49,6 +49,7 @@ const AddTaskDialog = ({ open, handleClose, onSave, editedTask }) => {
     const handleSave = () => {
         onSave(formData);
         handleClose();
+        handleSnackbarClick('add');
     };
 
     useEffect(() => {
