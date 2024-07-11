@@ -7,8 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import TaskDialog from './TaskDialog';
+import { useAtom } from 'jotai';
+import { tasksAtom } from './ToDoList';
 
-const Task = ({ key, task, index, deleteTask, onCheck, tasks, handleSnackbarClick, setTasks }) => {
+const Task = ({ key, task, index, handleSnackbarClick }) => {
+
+    const [tasks, setTasks] = useAtom(tasksAtom);
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
@@ -24,7 +28,23 @@ const Task = ({ key, task, index, deleteTask, onCheck, tasks, handleSnackbarClic
 
     const toggleTask = () => {
         setClassName(className === 'unchecked' ? 'checked' : 'unchecked');
-        onCheck(index)
+        handleCheckTask(index)
+    }
+
+    const handleCheckTask = (index) => {
+        const updatedTasks = [...tasks];
+        const isCheckedBefore = updatedTasks[index].isChecked
+        updatedTasks[index] = {
+            ...updatedTasks[index],
+            isChecked: isCheckedBefore ? false : true,
+        };
+        setTasks(updatedTasks);
+    }
+    
+    const deleteTask = (index) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
+        handleSnackbarClick('delete');
     }
 
     return (
@@ -68,8 +88,6 @@ const Task = ({ key, task, index, deleteTask, onCheck, tasks, handleSnackbarClic
                                     handleClose={handleDialogClose}
                                     editedTask={task}
                                     handleSnackbarClick={handleSnackbarClick}
-                                    setTasks={setTasks}
-                                    tasks={tasks}
                                 />
                             }
                         </div>

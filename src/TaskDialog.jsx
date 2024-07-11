@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,11 +8,15 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import { v4 as uuidv4 } from 'uuid';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useAtom } from 'jotai';
+import { tasksAtom } from './ToDoList';
 
 
-const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick, setTasks, tasks }) => {
+const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick }) => {
 
     const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
+
+    const [tasks, setTasks] = useAtom(tasksAtom);
 
     const [formData, setFormData] = useState(editedTask ? {
         id: editedTask.id,

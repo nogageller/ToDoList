@@ -3,15 +3,20 @@ import Typography from '@mui/material/Typography';
 import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
 import { useSnackbar } from 'notistack';
+import { atom, useAtom } from 'jotai';
+
+const initialListLocalStorage = JSON.parse(localStorage.getItem('myList')) || [];
+
+export const tasksAtom = atom(initialListLocalStorage);
 
 
 const ToDoList = () => {
 
-    const intialListLocalStorage = JSON.parse(localStorage.getItem('myList'));
     const { enqueueSnackbar } = useSnackbar();
 
     const [open, setOpen] = useState(false);
-    const [tasks, setTasks] = useState(intialListLocalStorage || []);
+    
+    const [tasks, setTasks] = useAtom(tasksAtom);
 
     const handleDialogClickOpen = () => {
         setOpen(true);
@@ -56,17 +61,12 @@ const ToDoList = () => {
                     open={open}
                     handleClose={handleDialogClose}
                     handleSnackbarClick={handleSnackbarClick}
-                    setTasks={setTasks}
-                    tasks={tasks}
                 />
             }
 
             <div><br></br></div>
 
             <TaskLists
-                tasks={tasks}
-                handleDialogClickOpen={handleDialogClickOpen}
-                setTasks={setTasks}
                 handleSnackbarClick={handleSnackbarClick}
             />
 

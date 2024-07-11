@@ -1,23 +1,11 @@
 import React from 'react'
 import Task from './Task'
+import { useAtom } from 'jotai';
+import { tasksAtom } from './ToDoList';
 
-const TaskLists = ({tasks, handleDialogClickOpen, setTasks, handleSnackbarClick}) => {
+const TaskLists = ({handleSnackbarClick}) => {
 
-    const deleteTask = (index) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
-        handleSnackbarClick('delete');
-    }
-
-    const handleCheckTask = (index) => {
-        const updatedTasks = [...tasks];
-        const isCheckedBefore = updatedTasks[index].isChecked
-        updatedTasks[index] = {
-            ...updatedTasks[index],
-            isChecked: isCheckedBefore ? false : true,
-        };
-        setTasks(updatedTasks);
-    }
+    const [tasks] = useAtom(tasksAtom);
 
   return (
     <>
@@ -27,11 +15,7 @@ const TaskLists = ({tasks, handleDialogClickOpen, setTasks, handleSnackbarClick}
                       <Task
                           task={task}
                           index={index}
-                          deleteTask={deleteTask}
-                          onCheck={handleCheckTask}
-                          tasks={tasks}
                           handleSnackbarClick={handleSnackbarClick}
-                          setTasks={setTasks}
                       />
                   </React.Fragment>
               )}
