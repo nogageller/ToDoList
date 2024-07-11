@@ -6,18 +6,26 @@ import { pink } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import TaskDialog from './TaskDialog';
 
-const Task = ({ key, task, index, deleteTask, onEdit, onCheck }) => {
+const Task = ({ key, task, index, deleteTask, onCheck, tasks, handleSnackbarClick, setTasks }) => {
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
+    const [open, setOpen] = useState(false);
+
+    const handleDialogClickOpen = (task) => {
+        setOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setOpen(false);
+    };
 
     const toggleTask = () => {
         setClassName(className === 'unchecked' ? 'checked' : 'unchecked');
         onCheck(index)
     }
-
-    const handleEditClicked = () => onEdit(task)
 
     return (
         <>
@@ -48,11 +56,22 @@ const Task = ({ key, task, index, deleteTask, onEdit, onCheck }) => {
                             <IconButton
                                 className='edit-button'
                                 aria-label="delete"
-                                onClick={handleEditClicked}
+                                onClick={handleDialogClickOpen}
                                 sx={{ color: 'white' }}
                             >
                                 <EditIcon />
                             </IconButton>
+                            {
+                                open &&
+                                <TaskDialog
+                                    open={open}
+                                    handleClose={handleDialogClose}
+                                    editedTask={task}
+                                    handleSnackbarClick={handleSnackbarClick}
+                                    setTasks={setTasks}
+                                    tasks={tasks}
+                                />
+                            }
                         </div>
                         <br></br>
                     </div>

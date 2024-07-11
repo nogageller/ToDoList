@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography';
-import AddTaskDialog from './AddTaskDialog';
+import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
 import { useSnackbar } from 'notistack';
 
@@ -11,15 +11,12 @@ const ToDoList = () => {
 
     const [open, setOpen] = useState(false);
     const [tasks, setTasks] = useState(intialListLocalStorage || []);
-    const [editedTask, setEditedTask] = useState(null);
 
-    const handleDialogClickOpen = (task) => {
-        setEditedTask(task);
+    const handleDialogClickOpen = () => {
         setOpen(true);
     };
 
     const handleDialogClose = () => {
-        setEditedTask(null);
         setOpen(false);
     };
 
@@ -28,7 +25,10 @@ const ToDoList = () => {
             enqueueSnackbar('Task added successfully!', { variant: 'success' });
         }
         else if (action === 'delete') {
-            enqueueSnackbar('Task deleted!', { variant: 'error' });
+            enqueueSnackbar('Task deleted!', { variant: 'success' });
+        }
+        else if (action === 'save') {
+            enqueueSnackbar('Task saved successfully!', { variant: 'success' });
         }
     };
 
@@ -49,14 +49,16 @@ const ToDoList = () => {
 
             <button className='add-button' onClick={handleDialogClickOpen}>Add new task</button>
 
-            <AddTaskDialog
-                open={open}
-                handleClose={handleDialogClose}
-                editedTask={editedTask}
-                handleSnackbarClick={handleSnackbarClick}
-                setTasks={setTasks}
-                tasks={tasks}
-            />
+            {
+                open &&
+                <TaskDialog
+                    open={open}
+                    handleClose={handleDialogClose}
+                    handleSnackbarClick={handleSnackbarClick}
+                    setTasks={setTasks}
+                    tasks={tasks}
+                />
+            }
 
             <div><br></br></div>
 

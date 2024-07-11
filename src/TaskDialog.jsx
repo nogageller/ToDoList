@@ -10,11 +10,17 @@ import { v4 as uuidv4 } from 'uuid';
 import Autocomplete from '@mui/material/Autocomplete';
 
 
-const AddTaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick, setTasks, tasks }) => {
+const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick, setTasks, tasks }) => {
 
     const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState(editedTask ? {
+        id: editedTask.id,
+        name: editedTask.name,
+        subject: editedTask.subject,
+        priority: editedTask.priority,
+        isChecked: editedTask.isChecked,
+    } : {
         id: null,
         name: '',
         subject: '',
@@ -43,13 +49,12 @@ const AddTaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick, set
             ...formData,
             ['subject']: value,
         });
-
     }
 
     const handleSave = () => {
         saveTask(formData);
         handleClose();
-        handleSnackbarClick('add');
+        handleSnackbarClick(editedTask ? 'save' : 'add');
     };
 
     const saveTask = (updatedTask) => {
@@ -65,32 +70,19 @@ const AddTaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick, set
             updatedTask.isChecked = false;
             setTasks([...tasks, updatedTask]);
         }
+        setFormData({
+            id: null,
+            name: '',
+            subject: '',
+            priority: 0,
+            isChecked: false,
+        });
     };
-
-    useEffect(() => {
-        if (editedTask) {
-            setFormData({
-                id: editedTask.id,
-                name: editedTask.name,
-                subject: editedTask.subject,
-                priority: editedTask.priority,
-                isChecked: editedTask.isChecked,
-            });
-        } else {
-            setFormData({
-                id: uuidv4(),
-                name: '',
-                subject: '',
-                priority: 0,
-                isChecked: false,
-            });
-        }
-    }, [editedTask]);
 
     return (
         <>
             <Dialog className='dialog' open={open} onClose={handleClose} fullWidth >
-                <DialogTitle className='dialog-title'>{editedTask ? 'Add New Task' : 'Edit Task'}</DialogTitle >
+                <DialogTitle className='dialog-title'>{editedTask ? 'Edit Task' :'Add New Task'}</DialogTitle >
                 <DialogContent className='dialog-content'>
                     <div className='taskInput'>
                         <TextField
@@ -131,15 +123,13 @@ const AddTaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick, set
                 </DialogContent>
                 <div className='dialog-actions'>
                     <DialogActions>
-                        <button className='dialog-buttons' onClick={handleSave}>{editedTask === null ? 'Save' : 'Add'}</button>
+                        <button className='dialog-buttons' onClick={handleSave}>{editedTask ? 'Save' : 'Add'}</button>
                         <button className='dialog-buttons' onClick={handleClose}>Cancel</button>
                     </DialogActions>
                 </div>
-
             </Dialog>
-
         </>
     )
 }
 
-export default AddTaskDialog
+export default TaskDialog

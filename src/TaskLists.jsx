@@ -28,8 +28,10 @@ const TaskLists = ({tasks, handleDialogClickOpen, setTasks, handleSnackbarClick}
                           task={task}
                           index={index}
                           deleteTask={deleteTask}
-                          onEdit={handleDialogClickOpen}
                           onCheck={handleCheckTask}
+                          tasks={tasks}
+                          handleSnackbarClick={handleSnackbarClick}
+                          setTasks={setTasks}
                       />
                   </React.Fragment>
               )}
