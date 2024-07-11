@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useAtom } from 'jotai';
 import { tasksAtom } from './ToDoList';
+import { useSnackbar } from 'notistack';
 
 
 const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick }) => {
@@ -17,6 +18,7 @@ const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick }) => {
     const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 
     const [tasks, setTasks] = useAtom(tasksAtom);
+    const { enqueueSnackbar } = useSnackbar();
 
     const [formData, setFormData] = useState(editedTask ? {
         id: editedTask.id,
@@ -58,7 +60,7 @@ const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick }) => {
     const handleSave = () => {
         saveTask(formData);
         handleClose();
-        handleSnackbarClick(editedTask ? 'save' : 'add');
+        enqueueSnackbar(editedTask ? 'Task saved successfully!' : 'Task added successfully!', { variant: 'success' });
     };
 
     const saveTask = (updatedTask) => {

@@ -3,12 +3,11 @@ import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import TaskDialog from './TaskDialog';
 import { useAtom } from 'jotai';
 import { tasksAtom } from './ToDoList';
+import DeleteButton from './TaskCard/DeleteButton';
+import EditButton from './TaskCard/EditButton';
 
 const Task = ({ task, index, handleSnackbarClick }) => {
 
@@ -40,12 +39,6 @@ const Task = ({ task, index, handleSnackbarClick }) => {
         };
         setTasks(updatedTasks);
     }
-    
-    const deleteTask = (index) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
-        handleSnackbarClick('delete');
-    }
 
     return (
         <>
@@ -64,33 +57,22 @@ const Task = ({ task, index, handleSnackbarClick }) => {
                             }}
                         />
                         <span className={className}>{task.name}</span>
-                        <div className='action-buttonsDiv'>
-                            <IconButton
-                                className='delete-button'
-                                aria-label="delete"
-                                onClick={() => deleteTask(index)}
-                                sx={{ color: 'white' }}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                                className='edit-button'
-                                aria-label="delete"
-                                onClick={handleDialogClickOpen}
-                                sx={{ color: 'white' }}
-                            >
-                                <EditIcon />
-                            </IconButton>
-                            {
-                                open &&
-                                <TaskDialog
-                                    open={open}
-                                    handleClose={handleDialogClose}
-                                    editedTask={task}
-                                    handleSnackbarClick={handleSnackbarClick}
-                                />
-                            }
-                        </div>
+                        <DeleteButton
+                            taskId={task.id}
+                        />
+                        <EditButton
+                            handleDialogClickOpen={handleDialogClickOpen}
+                            task={task}
+                        />
+                        {
+                            open &&
+                            <TaskDialog
+                                open={open}
+                                handleClose={handleDialogClose}
+                                editedTask={task}
+                                handleSnackbarClick={handleSnackbarClick}
+                            />
+                        }
                         <br></br>
                     </div>
                     <div>
