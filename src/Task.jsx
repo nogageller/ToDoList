@@ -10,7 +10,7 @@ import TaskDialog from './TaskDialog';
 import { useAtom } from 'jotai';
 import { tasksAtom } from './ToDoList';
 
-const Task = ({ key, task, index, handleSnackbarClick }) => {
+const Task = ({ task, index, handleSnackbarClick }) => {
 
     const [tasks, setTasks] = useAtom(tasksAtom);
 
@@ -49,7 +49,7 @@ const Task = ({ key, task, index, handleSnackbarClick }) => {
 
     return (
         <>
-            <div key={key} className='task'>
+            <div className='task'>
                 <div className='task-div'>
                     <div className='task-input-div'>
                         <Checkbox
