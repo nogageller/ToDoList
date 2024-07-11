@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid';
 import Typography from '@mui/material/Typography';
 import AddTaskDialog from './AddTaskDialog';
 import TaskLists from './TaskLists';
@@ -24,38 +23,6 @@ const ToDoList = () => {
         setOpen(false);
     };
 
-
-    const saveTask = (updatedTask) => {
-        if (updatedTask.id) {
-            const updatedTasks = tasks.map((task) =>
-                task.id === updatedTask.id ? updatedTask : task
-            );
-            setTasks(updatedTasks);
-        }
-        else {
-            // Add new task
-            updatedTask.id = uuidv4();
-            updatedTask.isChecked = false;
-            setTasks([...tasks, updatedTask]);
-        }
-    };
-
-    const deleteTask = (index) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
-        handleSnackbarClick('delete');
-    }
-
-    const handleCheckTask = (index) => {
-        const updatedTasks = [...tasks];
-        const isCheckedBefore = updatedTasks[index].isChecked
-        updatedTasks[index] = {
-            ...updatedTasks[index],
-            isChecked: isCheckedBefore ? false : true,
-        };
-        setTasks(updatedTasks);
-    }
-
     const handleSnackbarClick = (action) => {
         if (action === 'add') {
             enqueueSnackbar('Task added successfully!', { variant: 'success' });
@@ -78,7 +45,6 @@ const ToDoList = () => {
 
     return (
         <div>
-
             <Typography variant='h2' className='title'>To Do List</Typography>
 
             <button className='add-button' onClick={handleDialogClickOpen}>Add new task</button>
@@ -86,18 +52,19 @@ const ToDoList = () => {
             <AddTaskDialog
                 open={open}
                 handleClose={handleDialogClose}
-                onSave={saveTask}
                 editedTask={editedTask}
                 handleSnackbarClick={handleSnackbarClick}
+                setTasks={setTasks}
+                tasks={tasks}
             />
 
             <div><br></br></div>
 
             <TaskLists
                 tasks={tasks}
-                deleteTask={deleteTask}
                 handleDialogClickOpen={handleDialogClickOpen}
-                handleCheckTask={handleCheckTask}
+                setTasks={setTasks}
+                handleSnackbarClick={handleSnackbarClick}
             />
 
         </div>
