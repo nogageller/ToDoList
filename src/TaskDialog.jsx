@@ -3,19 +3,16 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
 import { v4 as uuidv4 } from 'uuid';
-import Autocomplete from '@mui/material/Autocomplete';
 import { useAtom } from 'jotai';
 import { tasksAtom } from './ToDoList';
 import { useSnackbar } from 'notistack';
+import TaskNameInput from './TaskDialog/TaskNameInput';
+import TaskSubjectInput from './TaskDialog/TaskSubjectInput';
+import TaskRatingInput from './TaskDialog/TaskRatingInput';
 
 
 const TaskDialog = ({ open, handleClose, editedTask }) => {
-
-    const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 
     const [tasks, setTasks] = useAtom(tasksAtom);
     const { enqueueSnackbar } = useSnackbar();
@@ -33,29 +30,6 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
         priority: 0,
         isChecked: false,
     });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'priority') {
-            setFormData({
-                ...formData,
-                priority: parseInt(value)
-            })
-        }
-        else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-        }
-    };
-
-    const handleAutoCompleteInput = (e, value) => {
-        setFormData({
-            ...formData,
-            ['subject']: value,
-        });
-    }
 
     const handleSave = () => {
         saveTask(formData);
@@ -88,44 +62,20 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
     return (
         <>
             <Dialog className='dialog' open={open} onClose={handleClose} fullWidth >
-                <DialogTitle className='dialog-title'>{editedTask ? 'Edit Task' :'Add New Task'}</DialogTitle >
+                <DialogTitle className='dialog-title'>{editedTask ? 'Edit Task' : 'Add New Task'}</DialogTitle >
                 <DialogContent className='dialog-content'>
-                    <div className='taskInput'>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="taskName"
-                            label="Task Name"
-                            variant="standard"
-                            type="text"
-                            name='name'
-                            value={formData.name || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className='subjectInput'>
-                        <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={subjectOptions}
-                            sx={{ width: 300 }}
-                            onChange={handleAutoCompleteInput}
-                            name='subject'
-                            value={formData.subject || null}
-                            renderInput={(params) => <TextField {...params} label="Subject" />}
-                        />
-                    </div>
-                    <Box className='boxContainer'
-                        sx={{
-                            '& > legend': { mt: 2 },
-                        }}
-                    >
-                        <Rating
-                            name="priority"
-                            value={formData.priority || 0}
-                            onChange={handleChange}
-                        />
-                    </Box>
+                    <TaskNameInput
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                    <TaskSubjectInput
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                    <TaskRatingInput
+                        formData={formData}
+                        setFormData={setFormData} 
+                    />
                 </DialogContent>
                 <div className='dialog-actions'>
                     <DialogActions>
