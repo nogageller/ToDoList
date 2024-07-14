@@ -1,21 +1,15 @@
 import React from 'react'
 import { useState } from 'react';
 import Typography from '@mui/material/Typography';
-import Checkbox from '@mui/material/Checkbox';
-import { pink } from '@mui/material/colors';
 import TaskDialog from './TaskDialog';
-import { useAtom } from 'jotai';
-import { tasksAtom } from './ToDoList';
 import DeleteButton from './TaskCard/DeleteButton';
 import EditButton from './TaskCard/EditButton';
+import CheckTask from './TaskCard/CheckTask';
 
-const Task = ({ task, index }) => {
+const Task = ({ task }) => {
 
-    const [tasks, setTasks] = useAtom(tasksAtom);
-
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
     const [open, setOpen] = useState(false);
+    const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
 
     const handleDialogClickOpen = (task) => {
         setOpen(true);
@@ -25,36 +19,15 @@ const Task = ({ task, index }) => {
         setOpen(false);
     };
 
-    const toggleTask = () => {
-        setClassName(className === 'unchecked' ? 'checked' : 'unchecked');
-        handleCheckTask(index)
-    }
-
-    const handleCheckTask = (index) => {
-        const updatedTasks = [...tasks];
-        const isCheckedBefore = updatedTasks[index].isChecked
-        updatedTasks[index] = {
-            ...updatedTasks[index],
-            isChecked: !isCheckedBefore,
-        };
-        setTasks(updatedTasks);
-    }
-
     return (
         <>
             <div className='task'>
                 <div className='task-div'>
                     <div className='task-input-div'>
-                        <Checkbox
-                            checked={task.isChecked}
-                            onChange={toggleTask}
-                            {...label}
-                            sx={{
-                                color: pink[800],
-                                '&.Mui-checked': {
-                                    color: pink[600],
-                                },
-                            }}
+                        <CheckTask
+                            task={task}
+                            className={className}
+                            setClassName={setClassName}
                         />
                         <span className={className}>{task.name}</span>
                         <DeleteButton

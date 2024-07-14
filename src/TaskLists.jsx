@@ -10,11 +10,10 @@ const TaskLists = () => {
   return (
     <>
           <div className='tasksContainer'>
-              {tasks?.map((task, index) =>
+              {tasks?.map((task) =>
                   <React.Fragment key={task.id}>
                       <Task
                           task={task}
-                          index={index}
                       />
                   </React.Fragment>
               )}
