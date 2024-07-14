@@ -6,10 +6,17 @@ const TaskRatingInput = ({formData, setFormData}) => {
 
     const handleChange = (e) => {
         const { value } = e.target;
-        setFormData({
-            ...formData,
-            priority: parseInt(value)
-        })
+        if ('defualtTask' in formData) {
+            setFormData({
+                priority: parseInt(value)
+            });
+        }
+        else {
+            setFormData({
+                ...formData,
+                priority: parseInt(value)
+            });
+        }
     };
 
     return (

@@ -1,12 +1,11 @@
 import React from 'react'
-import { useAtom } from 'jotai';
-import { tasksAtom } from '../ToDoList';
 import { useSnackbar } from 'notistack';
 import { v4 as uuidv4 } from 'uuid';
+import UseTodos from '../hooks/UseTodos';
 
 const CardFooter = ({editedTask, formData, setFormData, handleClose, defualtTask}) => {
 
-    const [tasks, setTasks] = useAtom(tasksAtom);
+    const {tasks, setTasks} = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
 
     const handleSave = () => {

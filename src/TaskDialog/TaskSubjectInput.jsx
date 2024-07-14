@@ -7,10 +7,17 @@ const TaskSubjectInput = ({formData, setFormData}) => {
     const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 
     const handleAutoCompleteInput = (e, value) => {
-        setFormData({
-            ...formData,
-            ['subject']: value,
-        });
+        if ('defualtTask' in formData) {
+            setFormData({
+                ['subject']: value,
+            });
+        }
+        else {
+            setFormData({
+                ...formData,
+                ['subject']: value,
+            });
+        }
     }
 
   return (

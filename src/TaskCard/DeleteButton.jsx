@@ -1,12 +1,11 @@
 import React from 'react'
-import { useAtom } from 'jotai';
-import { tasksAtom } from '../ToDoList';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
+import UseTodos from '../hooks/UseTodos';
 
 const DeleteButton = ({taskId}) => {
-    const [tasks, setTasks] = useAtom(tasksAtom);
+    const {tasks, setTasks} = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
 
     const deleteTask = () => {

@@ -1,11 +1,10 @@
 import React from 'react'
 import Task from './Task'
-import { useAtom } from 'jotai';
-import { tasksAtom } from './ToDoList';
+import UseTodos from './hooks/UseTodos';
 
 const TaskLists = () => {
 
-    const [tasks] = useAtom(tasksAtom);
+    const {tasks} = UseTodos();
 
   return (
     <>

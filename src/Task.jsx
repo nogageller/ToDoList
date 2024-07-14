@@ -11,7 +11,7 @@ const Task = ({ task }) => {
     const [open, setOpen] = useState(false);
     const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
 
-    const handleDialogClickOpen = (task) => {
+    const handleDialogClickOpen = () => {
         setOpen(true);
     };
 

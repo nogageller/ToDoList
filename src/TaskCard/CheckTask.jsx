@@ -1,12 +1,11 @@
 import React from 'react'
-import { useAtom } from 'jotai';
-import { tasksAtom } from '../ToDoList';
 import { useSnackbar } from 'notistack';
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
+import UseTodos from '../hooks/UseTodos';
 
 const CheckTask = ({ task, className, setClassName }) => {
-    const [tasks, setTasks] = useAtom(tasksAtom);
+    const {tasks, setTasks} = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
