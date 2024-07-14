@@ -3,7 +3,7 @@ import Task from './Task'
 import { useAtom } from 'jotai';
 import { tasksAtom } from './ToDoList';
 
-const TaskLists = ({handleSnackbarClick}) => {
+const TaskLists = () => {
 
     const [tasks] = useAtom(tasksAtom);
 
@@ -15,7 +15,6 @@ const TaskLists = ({handleSnackbarClick}) => {
                       <Task
                           task={task}
                           index={index}
-                          handleSnackbarClick={handleSnackbarClick}
                       />
                   </React.Fragment>
               )}

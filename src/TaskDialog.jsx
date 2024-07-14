@@ -13,7 +13,7 @@ import { tasksAtom } from './ToDoList';
 import { useSnackbar } from 'notistack';
 
 
-const TaskDialog = ({ open, handleClose, editedTask, handleSnackbarClick }) => {
+const TaskDialog = ({ open, handleClose, editedTask }) => {
 
     const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
 

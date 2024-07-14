@@ -9,7 +9,7 @@ import { tasksAtom } from './ToDoList';
 import DeleteButton from './TaskCard/DeleteButton';
 import EditButton from './TaskCard/EditButton';
 
-const Task = ({ task, index, handleSnackbarClick }) => {
+const Task = ({ task, index }) => {
 
     const [tasks, setTasks] = useAtom(tasksAtom);
 
@@ -35,7 +35,7 @@ const Task = ({ task, index, handleSnackbarClick }) => {
         const isCheckedBefore = updatedTasks[index].isChecked
         updatedTasks[index] = {
             ...updatedTasks[index],
-            isChecked: isCheckedBefore ? false : true,
+            isChecked: !isCheckedBefore,
         };
         setTasks(updatedTasks);
     }
@@ -70,7 +70,6 @@ const Task = ({ task, index, handleSnackbarClick }) => {
                                 open={open}
                                 handleClose={handleDialogClose}
                                 editedTask={task}
-                                handleSnackbarClick={handleSnackbarClick}
                             />
                         }
                         <br></br>

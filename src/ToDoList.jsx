@@ -26,18 +26,6 @@ const ToDoList = () => {
         setOpen(false);
     };
 
-    const handleSnackbarClick = (action) => {
-        if (action === 'add') {
-            enqueueSnackbar('Task added successfully!', { variant: 'success' });
-        }
-        else if (action === 'delete') {
-            enqueueSnackbar('Task deleted!', { variant: 'success' });
-        }
-        else if (action === 'save') {
-            enqueueSnackbar('Task saved successfully!', { variant: 'success' });
-        }
-    };
-
     useEffect(() => {
         localStorage.setItem('myList', JSON.stringify(tasks));
     }, [tasks]);
@@ -60,15 +48,12 @@ const ToDoList = () => {
                 <TaskDialog
                     open={open}
                     handleClose={handleDialogClose}
-                    handleSnackbarClick={handleSnackbarClick}
                 />
             }
 
             <div><br></br></div>
 
-            <TaskLists
-                handleSnackbarClick={handleSnackbarClick}
-            />
+            <TaskLists/>
 
         </div>
     )
