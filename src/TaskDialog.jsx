@@ -3,19 +3,21 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import { v4 as uuidv4 } from 'uuid';
-import { useAtom } from 'jotai';
-import { tasksAtom } from './ToDoList';
-import { useSnackbar } from 'notistack';
 import TaskNameInput from './TaskDialog/TaskNameInput';
 import TaskSubjectInput from './TaskDialog/TaskSubjectInput';
 import TaskRatingInput from './TaskDialog/TaskRatingInput';
+import CardFooter from './TaskDialog/CardFooter';
 
 
 const TaskDialog = ({ open, handleClose, editedTask }) => {
 
-    const [tasks, setTasks] = useAtom(tasksAtom);
-    const { enqueueSnackbar } = useSnackbar();
+    const defualtTask = {
+        id: null,
+        name: '',
+        subject: '',
+        priority: 0,
+        isChecked: false,
+    }
 
     const [formData, setFormData] = useState(editedTask ? {
         id: editedTask.id,
@@ -24,40 +26,9 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
         priority: editedTask.priority,
         isChecked: editedTask.isChecked,
     } : {
-        id: null,
-        name: '',
-        subject: '',
-        priority: 0,
-        isChecked: false,
+        defualtTask
     });
 
-    const handleSave = () => {
-        saveTask(formData);
-        handleClose();
-        enqueueSnackbar(editedTask ? 'Task saved successfully!' : 'Task added successfully!', { variant: 'success' });
-    };
-
-    const saveTask = (updatedTask) => {
-        if (updatedTask.id) {
-            const updatedTasks = tasks.map((task) =>
-                task.id === updatedTask.id ? updatedTask : task
-            );
-            setTasks(updatedTasks);
-        }
-        else {
-            // Add new task
-            updatedTask.id = uuidv4();
-            updatedTask.isChecked = false;
-            setTasks([...tasks, updatedTask]);
-        }
-        setFormData({
-            id: null,
-            name: '',
-            subject: '',
-            priority: 0,
-            isChecked: false,
-        });
-    };
 
     return (
         <>
@@ -74,13 +45,18 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
                     />
                     <TaskRatingInput
                         formData={formData}
-                        setFormData={setFormData} 
+                        setFormData={setFormData}
                     />
                 </DialogContent>
                 <div className='dialog-actions'>
                     <DialogActions>
-                        <button className='dialog-buttons' onClick={handleSave}>{editedTask ? 'Save' : 'Add'}</button>
-                        <button className='dialog-buttons' onClick={handleClose}>Cancel</button>
+                        <CardFooter
+                            editedTask={editedTask}
+                            formData={formData}
+                            setFormData={setFormData}
+                            handleClose={handleClose}
+                            defualtTask={defualtTask}
+                        />
                     </DialogActions>
                 </div>
             </Dialog>
