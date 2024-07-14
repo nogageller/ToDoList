@@ -3,8 +3,21 @@ import { useSnackbar } from 'notistack';
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
 import UseTodos from '../hooks/UseTodos';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        color: pink[800],
+        '&.Mui-checked': {
+            color: pink[600],
+        },
+    },
+}));
 
 const CheckTask = ({ task, className, setClassName }) => {
+
+    const classes = useStyles();
+
     const {tasks, setTasks} = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -35,12 +48,7 @@ const CheckTask = ({ task, className, setClassName }) => {
                 checked={task.isChecked}
                 onChange={toggleTask}
                 {...label}
-                sx={{
-                    color: pink[800],
-                    '&.Mui-checked': {
-                        color: pink[600],
-                    },
-                }}
+                className={classes.root}
             />
         </div>
     )
