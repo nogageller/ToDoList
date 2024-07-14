@@ -121,7 +121,7 @@ li {
 .task-div {
   width: 200px;
   height: 100px;
-  border: 2px solid white;
+  border: 2px solid rgb(217, 142, 181);
   padding: 20px;
 }
 
@@ -217,4 +217,23 @@ ol {
   justify-content: center;
   max-width: 1000px;
   flex-wrap: wrap;
+}
+
+.filterTasks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 980px;
+}
+
+.filter-buttons {
+  background-color: rgb(217, 142, 181);
+  width: 90px;
+  height: 40px;
+  font-size: 12px;
+  padding: 10px;
+}
+
+.filterDivs{
+  padding: 20px;
 }

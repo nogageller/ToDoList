@@ -2,11 +2,13 @@ import React from 'react'
 import { useSnackbar } from 'notistack';
 import { v4 as uuidv4 } from 'uuid';
 import UseTodos from '../hooks/UseTodos';
+import UseFilterTodos from '../hooks/UseFilterTodos';
 
 const CardFooter = ({editedTask, formData, setFormData, handleClose, defualtTask}) => {
 
     const {tasks, setTasks} = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
+    const { filterTasks, setFilterTasks } = UseFilterTodos();
 
     const handleSave = () => {
         saveTask(formData);
@@ -20,12 +22,14 @@ const CardFooter = ({editedTask, formData, setFormData, handleClose, defualtTask
                 task.id === updatedTask.id ? updatedTask : task
             );
             setTasks(updatedTasks);
+            setFilterTasks(updatedTasks);
         }
         else {
             // Add new task
             updatedTask.id = uuidv4();
             updatedTask.isChecked = false;
             setTasks([...tasks, updatedTask]);
+            setFilterTasks([...filterTasks, updatedTask]);
         }
         setFormData(defualtTask);
     };

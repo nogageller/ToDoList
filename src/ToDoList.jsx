@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Typography from '@mui/material/Typography';
 import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
+import SearchInput from './SearchInput';
+import FilterButtons from './FilterButtons';
 
 
 const ToDoList = () => {
@@ -20,7 +22,13 @@ const ToDoList = () => {
         <div>
             <Typography variant='h2' className='title'>To Do List</Typography>
 
-            <button className='add-button' onClick={handleDialogClickOpen}>Add new task</button>
+            <div className='filterTasks'>
+                <div className='filterDivs'>
+                    <SearchInput />
+                </div>
+                <button className='add-button' onClick={handleDialogClickOpen}>Add new task</button>
+            </div>
+            <FilterButtons />
 
             {
                 open &&
@@ -32,7 +40,7 @@ const ToDoList = () => {
 
             <div><br></br></div>
 
-            <TaskLists/>
+            <TaskLists />
 
         </div>
     )

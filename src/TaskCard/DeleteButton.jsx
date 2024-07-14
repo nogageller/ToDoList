@@ -3,14 +3,17 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
 import UseTodos from '../hooks/UseTodos';
+import UseFilterTodos from '../hooks/UseFilterTodos';
 
 const DeleteButton = ({taskId}) => {
     const {tasks, setTasks} = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
+    const { setFilterTasks } = UseFilterTodos();
 
     const deleteTask = () => {
         const updatedTasks = tasks.filter(task => task.id !== taskId);
         setTasks(updatedTasks);
+        setFilterTasks(updatedTasks);
         enqueueSnackbar('Task deleted!', { variant: 'success' });
     }
 

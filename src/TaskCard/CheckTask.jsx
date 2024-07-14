@@ -4,6 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
 import UseTodos from '../hooks/UseTodos';
 import { makeStyles } from '@mui/styles';
+import UseFilterTodos from '../hooks/UseFilterTodos';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,8 +19,9 @@ const CheckTask = ({ task, className, setClassName }) => {
 
     const classes = useStyles();
 
-    const {tasks, setTasks} = UseTodos();
+    const { tasks, setTasks } = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
+    const { setFilterTasks } = UseFilterTodos();
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -32,14 +34,13 @@ const CheckTask = ({ task, className, setClassName }) => {
     }
 
     const handleCheckTask = () => {
-        const taskId = task.id
-        setTasks(prevTasks =>
-            prevTasks.map(task =>
-                task.id === taskId
-                    ? { ...task, isChecked: !task.isChecked }
-                    : task
-            )
-        );
+        const updatedTasks = tasks.map(taskInfo =>
+            taskInfo.id === task.id
+                ? { ...taskInfo, isChecked: !taskInfo.isChecked }
+                : taskInfo
+        )
+        setTasks(updatedTasks)
+        setFilterTasks(updatedTasks);
     }
 
     return (
