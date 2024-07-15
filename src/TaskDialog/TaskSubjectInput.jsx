@@ -1,10 +1,11 @@
 import React from 'react'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import UseSubjects from '../hooks/useSubjects';
 
 const TaskSubjectInput = ({formData, setFormData}) => {
-    // move to useSubjects hook for prepare to conect with server side
-    const subjectOptions = ["Personal", "Work", "Study", "Shopping", "Health"];
+
+    const { subjectOptions } = UseSubjects()
 
     const handleAutoCompleteInput = (e, value) => {
         if ('defualtTask' in formData) {

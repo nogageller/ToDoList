@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
 import SearchInput from './SearchInput';
-import FilterButtons from './FilterButtons';
+import FilterButtons from './FilterButtons/index';
 
 
 const ToDoList = () => {
@@ -28,7 +28,7 @@ const ToDoList = () => {
                 </div>
                 <button className='add-button' onClick={handleDialogClickOpen}>Add new task</button>
             </div>
-            <FilterButtons />
+            <FilterButtons/>
 
             {
                 open &&

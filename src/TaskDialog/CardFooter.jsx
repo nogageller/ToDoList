@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSnackbar } from 'notistack';
 import { v4 as uuidv4 } from 'uuid';
-import UseTodos from '../hooks/UseTodos';
-import UseFilterTodos from '../hooks/UseFilterTodos';
+import UseTodos from '../hooks/useTodos';
+import UseFilterTodos from '../hooks/useFilterTodos';
 
-const CardFooter = ({editedTask, formData, setFormData, handleClose, defualtTask}) => {
+const CardFooter = ({ editedTask, formData, setFormData, handleClose, defualtTask }) => {
 
-    const {tasks, setTasks} = UseTodos();
+    const { tasks, setTasks } = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
     const { filterTasks, setFilterTasks } = UseFilterTodos();
 

@@ -2,9 +2,9 @@ import React from 'react'
 import { useSnackbar } from 'notistack';
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
-import UseTodos from '../hooks/UseTodos';
+import UseTodos from '../hooks/useTodos';
 import { makeStyles } from '@mui/styles';
-import UseFilterTodos from '../hooks/UseFilterTodos';
+import UseFilterTodos from '../hooks/useFilterTodos';
 
 const useStyles = makeStyles((theme) => ({
     root: {

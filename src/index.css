@@ -228,12 +228,23 @@ ol {
 
 .filter-buttons {
   background-color: rgb(217, 142, 181);
-  width: 90px;
-  height: 40px;
+  width: 100px;
+  height: 45px;
   font-size: 12px;
+  padding: 15px;
+}
+
+.filterDivs {
   padding: 10px;
 }
 
-.filterDivs{
-  padding: 20px;
+.filterButtonsDiv {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  width: 970px;
+}
+
+.filter-button{
+  padding: 10px;
 }

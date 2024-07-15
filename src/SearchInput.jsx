@@ -1,8 +1,8 @@
 import { TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { pink } from '@mui/material/colors';
-import UseFilterTodos from './hooks/UseFilterTodos';
-import UseTodos from './hooks/UseTodos';
+import UseFilterTodos from './hooks/useFilterTodos';
+import UseTodos from './hooks/useTodos';
 import { useDebounce } from 'use-debounce';
 
 const SearchInput = () => {

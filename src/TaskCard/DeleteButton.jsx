@@ -2,11 +2,11 @@ import React from 'react'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
-import UseTodos from '../hooks/UseTodos';
-import UseFilterTodos from '../hooks/UseFilterTodos';
+import UseTodos from '../hooks/useTodos';
+import UseFilterTodos from '../hooks/useFilterTodos';
 
-const DeleteButton = ({taskId}) => {
-    const {tasks, setTasks} = UseTodos();
+const DeleteButton = ({ taskId }) => {
+    const { tasks, setTasks } = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
     const { setFilterTasks } = UseFilterTodos();
 
