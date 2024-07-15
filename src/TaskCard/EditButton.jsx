@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import TaskDialog from '../TaskDialog';
 
 
-const EditButton = ({ handleDialogClickOpen, task }) => {
+const EditButton = ({ task }) => {
+    
+    const [open, setOpen] = useState(false);
+
+    const handleDialogClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div>
@@ -15,6 +26,15 @@ const EditButton = ({ handleDialogClickOpen, task }) => {
             >
                 <EditIcon />
             </IconButton>
+
+            {
+                open &&
+                <TaskDialog
+                    open={open}
+                    handleClose={handleDialogClose}
+                    editedTask={task}
+                />
+            }
         </div>
     )
 }

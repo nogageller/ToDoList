@@ -8,7 +8,7 @@ import TaskSubjectInput from './TaskDialog/TaskSubjectInput';
 import TaskRatingInput from './TaskDialog/TaskRatingInput';
 import CardFooter from './TaskDialog/CardFooter';
 
-
+// use formik / useForm 
 const TaskDialog = ({ open, handleClose, editedTask }) => {
 
     const defualtTask = {

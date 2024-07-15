@@ -18,7 +18,7 @@ const FilterButtons = () => {
         const updatedTasks = tasks.filter(task => task.isChecked === false);
         setTasks(updatedTasks);
         setFilterTasks(updatedTasks);
-        enqueueSnackbar('Tasks deleted!', { variant: 'success' });
+        enqueueSnackbar('Tasks deleted!', { variant: 'success' }); // try catch succ if not error, in the catch use error snackbar
     };
 
     const handleShowDone = () => {
@@ -30,6 +30,8 @@ const FilterButtons = () => {
         const updatedTasks = [...tasks]
         setFilterTasks(updatedTasks);
     };
+
+    // create fofer named filterButton, and file for each btn
 
     return (
         <div>

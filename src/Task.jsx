@@ -8,16 +8,7 @@ import CheckTask from './TaskCard/CheckTask';
 
 const Task = ({ task }) => {
 
-    const [open, setOpen] = useState(false);
     const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
-
-    const handleDialogClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDialogClose = () => {
-        setOpen(false);
-    };
 
     return (
         <>
@@ -34,17 +25,8 @@ const Task = ({ task }) => {
                             taskId={task.id}
                         />
                         <EditButton
-                            handleDialogClickOpen={handleDialogClickOpen}
                             task={task}
                         />
-                        {
-                            open &&
-                            <TaskDialog
-                                open={open}
-                                handleClose={handleDialogClose}
-                                editedTask={task}
-                            />
-                        }
                         <br></br>
                     </div>
                     <div>

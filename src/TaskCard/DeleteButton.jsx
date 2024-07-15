@@ -11,6 +11,7 @@ const DeleteButton = ({taskId}) => {
     const { setFilterTasks } = UseFilterTodos();
 
     const deleteTask = () => {
+        // think about way to to this on O(1)
         const updatedTasks = tasks.filter(task => task.id !== taskId);
         setTasks(updatedTasks);
         setFilterTasks(updatedTasks);

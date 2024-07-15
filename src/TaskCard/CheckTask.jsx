@@ -34,6 +34,7 @@ const CheckTask = ({ task, className, setClassName }) => {
     }
 
     const handleCheckTask = () => {
+        // think about way to to this on O(1)
         const updatedTasks = tasks.map(taskInfo =>
             taskInfo.id === task.id
                 ? { ...taskInfo, isChecked: !taskInfo.isChecked }

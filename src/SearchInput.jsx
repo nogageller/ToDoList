@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { pink } from '@mui/material/colors';
 import UseFilterTodos from './hooks/UseFilterTodos';
 import UseTodos from './hooks/UseTodos';
+import { useDebounce } from 'use-debounce';
 
 const SearchInput = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const { setFilterTasks } = UseFilterTodos();
     const { tasks } = UseTodos();
+    const [debounceInput] = useDebounce(searchInput, 1000);
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -26,24 +28,6 @@ const SearchInput = () => {
         const updatedTasks = tasks.filter(task => task.name.includes(searchInput));
         setFilterTasks(updatedTasks);
     }
-
-    // useEffect(() => {
-    //     const handler = setTimeout(() => {
-    //         console.log(searchInput);
-    //         if (searchInput) {
-    //             const updatedTasks = tasks.filter(task => task.name.includes(searchInput));
-    //             setFilterTasks(updatedTasks);
-    //         }
-    //         else {
-    //             const updatedTasks = tasks.filter(task => task);
-    //             setFilterTasks(updatedTasks);
-    //         }
-    //     }, 300);
-
-    //     return () => {
-    //         clearTimeout(handler);
-    //     };
-    // }, [searchInput]);
 
     return (
         <div>
