@@ -245,6 +245,13 @@ ol {
   width: 970px;
 }
 
-.filter-button{
+.filter-button {
   padding: 10px;
+}
+
+.error-message{
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-size: small;
 }

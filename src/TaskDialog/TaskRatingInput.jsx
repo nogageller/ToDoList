@@ -1,23 +1,9 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import { Controller } from 'react-hook-form';
 
-const TaskRatingInput = ({formData, setFormData}) => {
-
-    const handleChange = (e) => {
-        const { value } = e.target;
-        if ('defualtTask' in formData) {
-            setFormData({
-                priority: parseInt(value)
-            });
-        }
-        else {
-            setFormData({
-                ...formData,
-                priority: parseInt(value)
-            });
-        }
-    };
+const TaskRatingInput = ({ register, setValue, control }) => {
 
     return (
         <Box className='boxContainer'
@@ -25,10 +11,12 @@ const TaskRatingInput = ({formData, setFormData}) => {
                 '& > legend': { mt: 2 },
             }}
         >
-            <Rating
+            <Controller
                 name="priority"
-                value={formData.priority || 0}
-                onChange={handleChange}
+                control={control}
+                render={({ field }) => (
+                    <Rating   {...field} value={Number(field.value)} />
+                )}
             />
         </Box>
     )

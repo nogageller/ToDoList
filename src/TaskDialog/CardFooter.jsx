@@ -4,16 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 import UseTodos from '../hooks/useTodos';
 import UseFilterTodos from '../hooks/useFilterTodos';
 
-const CardFooter = ({ editedTask, formData, setFormData, handleClose, defualtTask }) => {
+const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
 
     const { tasks, setTasks } = UseTodos();
     const { enqueueSnackbar } = useSnackbar();
     const { filterTasks, setFilterTasks } = UseFilterTodos();
 
-    const handleSave = () => {
-        saveTask(formData);
+    const handleSave = (data) => {
+        saveTask(data);
         handleClose();
-        enqueueSnackbar(editedTask ? 'Task saved successfully!' : 'Task added successfully!', { variant: 'success' });
     };
 
     const saveTask = (updatedTask) => {
@@ -31,13 +30,13 @@ const CardFooter = ({ editedTask, formData, setFormData, handleClose, defualtTas
             setTasks([...tasks, updatedTask]);
             setFilterTasks([...filterTasks, updatedTask]);
         }
-        setFormData(defualtTask);
+        enqueueSnackbar('Task saved successfully!', { variant: 'success' });
     };
 
     return (
         <div>
-            <button className='dialog-buttons' onClick={handleSave}>{editedTask ? 'Save' : 'Add'}</button>
-            <button className='dialog-buttons' onClick={handleClose}>Cancel</button>
+            <button className='dialog-buttons' type='submit' onClick={handleSubmit(handleSave)}>{editedTask ? 'Save' : 'Add'}</button>
+            <button className='dialog-buttons' type='button' onClick={handleClose}>Cancel</button>
         </div>
     )
 }
