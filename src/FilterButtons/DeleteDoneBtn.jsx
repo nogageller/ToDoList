@@ -1,11 +1,11 @@
 import React from 'react'
-import UseTodos from '../hooks/useTodos';
+import useTodos from '../hooks/useTodos';
 import { useSnackbar } from 'notistack';
-import UseFilterTodos from '../hooks/useFilterTodos';
+import useFilterTodos from '../hooks/useFilterTodos';
 
 const DeleteDoneBtn = () => {
-    const { tasks, setTasks } = UseTodos();
-    const { setFilterTasks } = UseFilterTodos();
+    const { tasks, setTasks } = useTodos();
+    const { setFilterTasks } = useFilterTodos();
     const { enqueueSnackbar } = useSnackbar();
 
     const handleDeleteDone = () => {

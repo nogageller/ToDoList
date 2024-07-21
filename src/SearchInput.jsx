@@ -1,15 +1,15 @@
 import { TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { pink } from '@mui/material/colors';
-import UseFilterTodos from './hooks/useFilterTodos';
-import UseTodos from './hooks/useTodos';
+import useFilterTodos from './hooks/useFilterTodos';
+import useTodos from './hooks/useTodos';
 import { useDebouncedCallback } from 'use-debounce';
 
 const SearchInput = () => {
 
     const [searchInput, setSearchInput] = useState('')
-    const { setFilterTasks } = UseFilterTodos();
-    const { tasks } = UseTodos();
+    const { setFilterTasks } = useFilterTodos();
+    const { tasks } = useTodos();
 
     const debounceFunction = useDebouncedCallback((value) => {
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import UseSubjects from '../hooks/useSubjects';
+import useSubjects from '../hooks/useSubjects';
 
 const TaskSubjectInput = ({ register, setValue, editedTask, watch }) => {
 
-    const { subjectOptions } = UseSubjects()
+    const { subjectOptions } = useSubjects()
 
     return (
         <div className='subjectInput'>

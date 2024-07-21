@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const UseSubjects = () => {
+export const useSubjects = () => {
     const [subjectOptions] = useState(["Personal", "Work", "Study", "Shopping", "Health"]);
 
     return {
@@ -8,4 +8,4 @@ export const UseSubjects = () => {
     };
 }
 
-export default UseSubjects
+export default useSubjects

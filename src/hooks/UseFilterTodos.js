@@ -3,7 +3,7 @@ import { atomWithStorage } from 'jotai/utils'
 
 export const filterTasksAtom = atomWithStorage('filterTasks', []);
 
-export const UseFilterTodos = () => {
+export const useFilterTodos = () => {
     const [filterTasks, setFilterTasks] = useAtom(filterTasksAtom);
 
     return {
@@ -12,4 +12,4 @@ export const UseFilterTodos = () => {
     };
 }
 
-export default UseFilterTodos
+export default useFilterTodos

@@ -3,7 +3,7 @@ import { atomWithStorage } from 'jotai/utils'
 
 export const tasksAtom = atomWithStorage('task', []);
 
-export const UseTodos = () => {
+export const useTodos = () => {
     const [tasks, setTasks] = useAtom(tasksAtom);
 
     return {
@@ -12,4 +12,4 @@ export const UseTodos = () => {
     };
 }
 
-export default UseTodos
+export default useTodos

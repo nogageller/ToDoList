@@ -1,12 +1,9 @@
 import React from 'react'
 import Task from './Task'
-import UseTodos from './hooks/useTodos';
-import UseFilterTodos from './hooks/useFilterTodos';
+import useFilterTodos from './hooks/useFilterTodos';
 
 const TaskLists = () => {
-
-    const { tasks } = UseTodos();
-    const { filterTasks, setFilterTasks } = UseFilterTodos();
+    const { filterTasks } = useFilterTodos();
 
     return (
         <>
