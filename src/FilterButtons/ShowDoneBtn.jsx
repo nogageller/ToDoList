@@ -3,7 +3,7 @@ import useTodos from '../hooks/useTodos';
 import useFilterTodos from '../hooks/useFilterTodos';
 
 const ShowDoneBtn = () => {
-    const { tasks } = useTodos();
+    const { tasks } = useTodos({});
     const { setFilterTasks } = useFilterTodos();
 
     const handleShowDone = () => {

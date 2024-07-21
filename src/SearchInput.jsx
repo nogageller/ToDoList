@@ -9,7 +9,7 @@ const SearchInput = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const { setFilterTasks } = useFilterTodos();
-    const { tasks } = useTodos();
+    const { tasks } = useTodos({});
 
     const debounceFunction = useDebouncedCallback((value) => {
 

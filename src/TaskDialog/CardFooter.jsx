@@ -6,7 +6,7 @@ import useFilterTodos from '../hooks/useFilterTodos';
 
 const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
 
-    const { tasks, setTasks } = useTodos();
+    const { tasks, setTasks } = useTodos({});
     const { enqueueSnackbar } = useSnackbar();
     const { filterTasks, setFilterTasks } = useFilterTodos();
 

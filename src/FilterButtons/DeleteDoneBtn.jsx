@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import useFilterTodos from '../hooks/useFilterTodos';
 
 const DeleteDoneBtn = () => {
-    const { tasks, setTasks } = useTodos();
+    const { tasks, setTasks } = useTodos({});
     const { setFilterTasks } = useFilterTodos();
     const { enqueueSnackbar } = useSnackbar();
 

@@ -5,6 +5,7 @@ import { pink } from '@mui/material/colors';
 import useTodos from '../hooks/useTodos';
 import { makeStyles } from '@mui/styles';
 import useFilterTodos from '../hooks/useFilterTodos';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,10 +17,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CheckTask = ({ task, className, setClassName }) => {
-
     const classes = useStyles();
 
-    const { tasks, setTasks } = useTodos();
+    const { tasks, setTasks } = useTodos({ keyBy: false });
     const { enqueueSnackbar } = useSnackbar();
     const { setFilterTasks } = useFilterTodos();
 
@@ -34,14 +34,21 @@ const CheckTask = ({ task, className, setClassName }) => {
     }
 
     const handleCheckTask = () => {
-        // think about way to to this on O(1)
-        const updatedTasks = tasks.map(taskInfo =>
-            taskInfo.id === task.id
-                ? { ...taskInfo, isChecked: !taskInfo.isChecked }
-                : taskInfo
-        )
-        setTasks(updatedTasks)
-        setFilterTasks(updatedTasks);
+        const tasksKeyedBy = _.keyBy(tasks, 'id');
+        const taskId = task.id
+
+        if (tasksKeyedBy.hasOwnProperty(taskId)) {
+            const task = tasksKeyedBy[taskId];
+            const updatedTask = { ...task, isChecked: !task.isChecked };
+            const updatedTasksKeyedBy = {
+                ...tasksKeyedBy,
+                [taskId]: updatedTask
+            };
+            const updatedTasksArray = Object.values(updatedTasksKeyedBy);
+
+            setTasks(updatedTasksArray)
+            setFilterTasks(updatedTasksArray);
+        }
     }
 
     return (

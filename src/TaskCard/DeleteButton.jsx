@@ -2,17 +2,19 @@ import React from 'react'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from 'notistack';
-import useTodos from '../hooks/useTodos';
 import useFilterTodos from '../hooks/useFilterTodos';
+import _keyBy from 'lodash/keyBy';
+import useTodos from '../hooks/useTodos';
 
 const DeleteButton = ({ taskId }) => {
-    const { tasks, setTasks } = useTodos();
+    const { tasks, setTasks } = useTodos({ keyBy: true });
     const { enqueueSnackbar } = useSnackbar();
     const { setFilterTasks } = useFilterTodos();
 
     const deleteTask = () => {
-        // think about way to to this on O(1)
-        const updatedTasks = tasks.filter(task => task.id !== taskId);
+        const { [taskId]: deletedTask, ...remainingTasks } = tasks;
+        const updatedTasks = Object.values(remainingTasks);
+
         setTasks(updatedTasks);
         setFilterTasks(updatedTasks);
         enqueueSnackbar('Task deleted!', { variant: 'success' });
