@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import UseFilterTodos from '../hooks/useFilterTodos';
 
 const DeleteDoneBtn = () => {
-
     const { tasks, setTasks } = UseTodos();
     const { setFilterTasks } = UseFilterTodos();
     const { enqueueSnackbar } = useSnackbar();
@@ -16,7 +15,6 @@ const DeleteDoneBtn = () => {
             setFilterTasks(updatedTasks);
             enqueueSnackbar('Tasks deleted!', { variant: 'success' });
         } catch (error) {
-            console.error('Error deleting tasks:', error);
             enqueueSnackbar('Failed to delete tasks!', { variant: 'error' });
         }
     };

@@ -1,32 +1,33 @@
 import { TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { pink } from '@mui/material/colors';
 import UseFilterTodos from './hooks/useFilterTodos';
 import UseTodos from './hooks/useTodos';
-import { useDebounce } from 'use-debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 const SearchInput = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const { setFilterTasks } = UseFilterTodos();
     const { tasks } = UseTodos();
-    const [debouncedSearchInput] = useDebounce(searchInput, 1000);
+
+    const debounceFunction = useDebouncedCallback((value) => {
+
+        const filteredTasks = value
+            ? tasks.filter(task =>
+                task.name.toLowerCase().includes(value.toLowerCase())
+            )
+            : tasks;
+
+        setFilterTasks(filteredTasks);
+    }, 1000);
+
 
     const handleChange = (e) => {
         const { value } = e.target;
         setSearchInput(value);
+        debounceFunction(value);
     };
-
-    useEffect(() => {
-        if (debouncedSearchInput) {
-            const updatedTasks = tasks.filter(task =>
-                task.name.toLowerCase().includes(debouncedSearchInput.toLowerCase())
-            );
-            setFilterTasks(updatedTasks);
-        } else {
-            setFilterTasks(tasks);
-        }
-    }, [debouncedSearchInput, tasks]);
 
     return (
         <div>
