@@ -17,7 +17,15 @@ const useFilterTodos = () => {
                 return [...tasks]
             case 'showDone':
                 return tasks.filter(task => task.isChecked === true);
+            case 'search':
+                return tasks.filter(task => task.name.toLowerCase().includes(value.toLowerCase()))
             default:
+                if (filterOptions.startsWith('search:')) {
+                    const searchTerm = filterOptions.substring(7); 
+                    return tasks.filter(task =>
+                        task.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
                 return [...tasks]
         }
     }, [tasks, filterOptions]);

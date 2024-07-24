@@ -2,26 +2,21 @@ import { TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { pink } from '@mui/material/colors';
 import useFilterTodos from './hooks/useFilterTodos';
-import useTodos from './hooks/useTodos';
 import { useDebouncedCallback } from 'use-debounce';
 
 const SearchInput = () => {
 
     const [searchInput, setSearchInput] = useState('')
-    const { setFilterTasks } = useFilterTodos();
-    const { tasks } = useTodos({});
+    const { setFilterOptions } = useFilterTodos();
 
     const debounceFunction = useDebouncedCallback((value) => {
-
-        const filteredTasks = value
-            ? tasks.filter(task =>
-                task.name.toLowerCase().includes(value.toLowerCase())
-            )
-            : tasks;
-
-        setFilterTasks(filteredTasks);
+        if (value.trim() !== '') {
+            setFilterOptions(`search:${value}`);
+        }
+        else{
+            setFilterOptions('showAll')
+        }
     }, 1000);
-
 
     const handleChange = (e) => {
         const { value } = e.target;
