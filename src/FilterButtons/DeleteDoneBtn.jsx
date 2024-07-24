@@ -1,19 +1,16 @@
 import React from 'react'
 import useTodos from '../hooks/useTodos';
 import { useSnackbar } from 'notistack';
-import useFilterTodos from '../hooks/useFilterTodos';
 
 const DeleteDoneBtn = () => {
     const { tasks, setTasks } = useTodos({});
-    const { setFilterTasks } = useFilterTodos();
     const { enqueueSnackbar } = useSnackbar();
 
     const handleDeleteDone = () => {
         try {
-            const updatedTasks = tasks.filter(task => task.isChecked === false);
-            setTasks(updatedTasks);
-            setFilterTasks(updatedTasks);
+            setTasks(tasks.filter(task => task.isChecked === false));
             enqueueSnackbar('Tasks deleted!', { variant: 'success' });
+            return tasks.map(task => task)
         } catch (error) {
             enqueueSnackbar('Failed to delete tasks!', { variant: 'error' });
         }

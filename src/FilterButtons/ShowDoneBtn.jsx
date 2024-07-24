@@ -1,14 +1,11 @@
 import React from 'react'
-import useTodos from '../hooks/useTodos';
 import useFilterTodos from '../hooks/useFilterTodos';
 
 const ShowDoneBtn = () => {
-    const { tasks } = useTodos({});
-    const { setFilterTasks } = useFilterTodos();
+    const { setFilterOptions } = useFilterTodos();
 
     const handleShowDone = () => {
-        const updatedTasks = tasks.filter(task => task.isChecked === true);
-        setFilterTasks(updatedTasks);
+        setFilterOptions('showDone');
     };
 
     return (

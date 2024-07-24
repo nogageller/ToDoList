@@ -1,14 +1,31 @@
 import { useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils'
+import useTodos from './useTodos';
+import { useMemo } from 'react';
+import { atom } from 'jotai';
 
-export const filterTasksAtom = atomWithStorage('filterTasks', []);
+export const filterOptionsAtom = atom('');
 
-export const useFilterTodos = () => {
-    const [filterTasks, setFilterTasks] = useAtom(filterTasksAtom);
+const useFilterTodos = () => {
+    const { tasks } = useTodos({ keyBy: false });
+    const [filterOptions, setFilterOptions] = useAtom(filterOptionsAtom);
+
+    const filterTasks = useMemo(() => {
+        switch (filterOptions) {
+            case 'hideDone':
+                return tasks.filter(task => task.isChecked === false);
+            case 'showAll':
+                return [...tasks]
+            case 'showDone':
+                return tasks.filter(task => task.isChecked === true);
+            default:
+                return [...tasks]
+        }
+    }, [tasks, filterOptions]);
 
     return {
         filterTasks,
-        setFilterTasks,
+        filterOptions,
+        setFilterOptions,
     };
 }
 

@@ -1,14 +1,11 @@
 import React from 'react'
-import useTodos from '../hooks/useTodos';
 import useFilterTodos from '../hooks/useFilterTodos';
 
 const ShowAllBtn = () => {
-    const { tasks } = useTodos({});
-    const { setFilterTasks } = useFilterTodos();
+    const { setFilterOptions } = useFilterTodos();
 
     const handleShowAll = () => {
-        const updatedTasks = [...tasks]
-        setFilterTasks(updatedTasks);
+        setFilterOptions('showAll');
     };
 
     return (

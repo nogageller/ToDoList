@@ -9,14 +9,14 @@ import useTodos from '../hooks/useTodos';
 const DeleteButton = ({ taskId }) => {
     const { tasks, setTasks } = useTodos({ keyBy: true });
     const { enqueueSnackbar } = useSnackbar();
-    const { setFilterTasks } = useFilterTodos();
+    //const { setFilterTasks } = useFilterTodos();
 
     const deleteTask = () => {
         const { [taskId]: deletedTask, ...remainingTasks } = tasks;
         const updatedTasks = Object.values(remainingTasks);
 
         setTasks(updatedTasks);
-        setFilterTasks(updatedTasks);
+        //setFilterTasks(updatedTasks);
         enqueueSnackbar('Task deleted!', { variant: 'success' });
     }
 
