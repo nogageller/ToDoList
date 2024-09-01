@@ -22,9 +22,9 @@ export const createTask = async (task) => {
     }
 };
 
-export const updateTask = async (id, task) => {
+export const updateTask = async ({ id, updatedTask } ) => {
     try {
-        const response = await axios.put(`/tasks/${id}`, task);
+        const response = await axios.put(`/tasks/${id}`, updatedTask);
         return response.data;
     } catch (error) {
         console.error('Error updating task:', error);
