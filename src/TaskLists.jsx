@@ -7,7 +7,7 @@ import useTasks from './hooks/useTasks';
 const TaskLists = () => {
     //const { filterTasks } = useFilterTodos();
 
-    const { data: tasks, isLoading, error } = useTasks(); // Destructure data, loading, and error
+    const { data: tasks, isLoading, error } = useTasks(); 
 
     if (isLoading) return <div>Loading tasks...</div>;
     if (error) return <div>Error fetching tasks: {error.message}</div>;

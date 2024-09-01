@@ -5,32 +5,34 @@ import { useSnackbar } from 'notistack';
 import useFilterTodos from '../hooks/useFilterTodos';
 import _keyBy from 'lodash/keyBy';
 import useTodos from '../hooks/useTodos';
-import useDeleteTask from '../hooks/useDeleteTask';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteTask } from '../api/apiService';
 
 const DeleteButton = ({ taskId }) => {
     const { tasks, setTasks } = useTodos({ keyBy: true });
     const { enqueueSnackbar } = useSnackbar();
+    const queryClient = useQueryClient();
     //const { setFilterTasks } = useFilterTodos();
 
-    const { mutate: deleteTask } = useDeleteTask();
-
+    const deleteTaskMutation = useMutation({
+        mutationFn: deleteTask,
+        onSuccess: () => {
+            queryClient.invalidateQueries(['tasks']);
+        },
+        onError: (error) => {
+            console.error('Error deleting task:', error);
+        },
+    });
 
     const handleDeleteTask = async () => {
         const { [taskId]: deletedTask, ...remainingTasks } = tasks;
         const updatedTasks = Object.values(remainingTasks);
-
         setTasks(updatedTasks);
-        //setFilterTasks(updatedTasks);
-        //enqueueSnackbar('Task deleted!', { variant: 'success' });
 
-        deleteTask(taskId, {
-            onSuccess: () => {
-                enqueueSnackbar('Task deleted!', { variant: 'success' });
-            },
-            onError: (error) => {
-                enqueueSnackbar('Failed to delete task.', { variant: 'error' });
-            },
-        });
+        //setFilterTasks(updatedTasks);
+        
+        deleteTaskMutation.mutate(taskId);
+        enqueueSnackbar('Task deleted!', { variant: 'success' });
     }
 
 
