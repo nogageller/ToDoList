@@ -2,36 +2,61 @@ import React from 'react'
 import { useSnackbar } from 'notistack';
 import { v4 as uuidv4 } from 'uuid';
 import useTodos from '../hooks/useTodos';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createTask } from '../api/apiService';
 
 const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
 
     const { tasks, setTasks } = useTodos({});
     const { enqueueSnackbar } = useSnackbar();
+    const queryClient = useQueryClient();
+
+    const { mutate: addNewTask, isLoading, isError, isSuccess } = useMutation({
+        mutationFn: createTask,
+        onSuccess: () => {
+            queryClient.invalidateQueries(['tasks']);
+            enqueueSnackbar('Task added successfully!', { variant: 'success' });
+        },
+        onError: () => {
+            enqueueSnackbar('Failed to add task.', { variant: 'error' });
+        },
+    });
 
     const handleSave = (data) => {
         saveTask(data);
+        const { _id, id, ...taskWithoutId } = data;
+        taskWithoutId.priority = Number(taskWithoutId.priority);
+        const jsonString = JSON.stringify(taskWithoutId);
+
+        let replaceJson = jsonString.replace(/'/g, '"');
+        let jsonObject = JSON.parse(replaceJson);
+
+
+        addNewTask(jsonObject)
         handleClose();
     };
 
     const saveTask = (updatedTask) => {
-        if (updatedTask.id) {
+        if (updatedTask._id) {
             const updatedTasks = tasks.map((task) =>
-                task.id === updatedTask.id ? updatedTask : task
+                task._id === updatedTask._id ? updatedTask : task
             );
             setTasks(updatedTasks);
         }
         else {
             // Add new task
-            updatedTask.id = uuidv4();
+            //updatedTask._id = uuidv4();
             updatedTask.isChecked = false;
             setTasks([...tasks, updatedTask]);
         }
-        enqueueSnackbar('Task saved successfully!', { variant: 'success' });
+        //enqueueSnackbar('Task saved successfully!', { variant: 'success' });
     };
 
     return (
         <div>
             <button className='dialog-buttons' type='submit' onClick={handleSubmit(handleSave)}>{editedTask ? 'Save' : 'Add'}</button>
+            {isError && <p>Error adding task. Please try again.</p>}
+            {isSuccess && <p>Task added successfully!</p>}
             <button className='dialog-buttons' type='button' onClick={handleClose}>Cancel</button>
         </div>
     )
