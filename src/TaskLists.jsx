@@ -1,22 +1,27 @@
 import React from 'react'
 import Task from './Task'
 import useFilterTodos from './hooks/useFilterTodos';
+import useTasks from './hooks/useTasks';
+
 
 const TaskLists = () => {
-    const { filterTasks } = useFilterTodos();
+    //const { filterTasks } = useFilterTodos();
+
+    const { data: tasks, isLoading, error } = useTasks(); // Destructure data, loading, and error
+
+    if (isLoading) return <div>Loading tasks...</div>;
+    if (error) return <div>Error fetching tasks: {error.message}</div>;
 
     return (
-        <>
-            <div className='tasksContainer'>
-                {filterTasks?.map((task) =>
-                    <React.Fragment key={task.id}>
-                        <Task
-                            task={task}
-                        />
-                    </React.Fragment>
-                )}
-            </div>
-        </>
+        <div className='tasksContainer'>
+            {tasks?.map((task) =>
+                <React.Fragment key={task.id}>
+                    <Task
+                        task={task}
+                    />
+                </React.Fragment>
+            )}
+        </div>
     )
 }
 

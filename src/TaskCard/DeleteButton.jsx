@@ -5,19 +5,32 @@ import { useSnackbar } from 'notistack';
 import useFilterTodos from '../hooks/useFilterTodos';
 import _keyBy from 'lodash/keyBy';
 import useTodos from '../hooks/useTodos';
+import useDeleteTask from '../hooks/useDeleteTask';
 
 const DeleteButton = ({ taskId }) => {
     const { tasks, setTasks } = useTodos({ keyBy: true });
     const { enqueueSnackbar } = useSnackbar();
     //const { setFilterTasks } = useFilterTodos();
 
-    const deleteTask = () => {
+    const { mutate: deleteTask } = useDeleteTask();
+
+
+    const handleDeleteTask = async () => {
         const { [taskId]: deletedTask, ...remainingTasks } = tasks;
         const updatedTasks = Object.values(remainingTasks);
 
         setTasks(updatedTasks);
         //setFilterTasks(updatedTasks);
-        enqueueSnackbar('Task deleted!', { variant: 'success' });
+        //enqueueSnackbar('Task deleted!', { variant: 'success' });
+
+        deleteTask(taskId, {
+            onSuccess: () => {
+                enqueueSnackbar('Task deleted!', { variant: 'success' });
+            },
+            onError: (error) => {
+                enqueueSnackbar('Failed to delete task.', { variant: 'error' });
+            },
+        });
     }
 
 
@@ -26,7 +39,7 @@ const DeleteButton = ({ taskId }) => {
             <IconButton
                 className='delete-button'
                 aria-label="delete"
-                onClick={() => deleteTask()}
+                onClick={() => handleDeleteTask()}
                 sx={{ color: 'white' }}
             >
                 <DeleteIcon />

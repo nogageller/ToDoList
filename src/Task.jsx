@@ -10,31 +10,29 @@ const Task = ({ task }) => {
     const [className, setClassName] = useState(task.isChecked ? 'checked' : 'unchecked');
 
     return (
-        <>
-            <div className='task'>
-                <div className='task-div'>
-                    <div className='task-input-div'>
-                        <CheckTask
-                            task={task}
-                            className={className}
-                            setClassName={setClassName}
-                        />
-                        <span className={className}>{task.name}</span>
-                        <DeleteButton
-                            taskId={task.id}
-                        />
-                        <EditButton
-                            task={task}
-                        />
-                        <br></br>
-                    </div>
-                    <div>
-                        <Typography>Subject: {task.subject}</Typography>
-                        <Typography>Priority: {task.priority}</Typography>
-                    </div>
+        < div className='task' >
+            <div className='task-div'>
+                <div className='task-input-div'>
+                    <CheckTask
+                        task={task}
+                        className={className}
+                        setClassName={setClassName}
+                    />
+                    <span className={className}>{task.name}</span>
+                    <DeleteButton
+                        taskId={task._id}
+                    />
+                    <EditButton
+                        task={task}
+                    />
+                    <br></br>
+                </div>
+                <div>
+                    <Typography>Subject: {task.subject}</Typography>
+                    <Typography>Priority: {task.priority}</Typography>
                 </div>
             </div>
-        </>
+        </div >
     )
 }
 
