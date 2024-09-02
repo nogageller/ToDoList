@@ -1,19 +1,26 @@
 import React from 'react'
-import useTodos from '../hooks/useTodos';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteDoneTasks } from '../api/apiService';
 import { useSnackbar } from 'notistack';
 
 const DeleteDoneBtn = () => {
-    const { tasks, setTasks } = useTodos({});
+    const queryClient = useQueryClient();
     const { enqueueSnackbar } = useSnackbar();
 
+    const deleteDoneTaskMutation = useMutation({
+        mutationFn: deleteDoneTasks,
+        onSuccess: () => {
+            queryClient.invalidateQueries(['tasks']);
+        },
+        onError: (error) => {
+            console.error('Error deleting task:', error);
+        },
+    });
+
+
     const handleDeleteDone = () => {
-        try {
-            setTasks(tasks.filter(task => task.isChecked === false));
-            enqueueSnackbar('Tasks deleted!', { variant: 'success' });
-            return tasks.map(task => task)
-        } catch (error) {
-            enqueueSnackbar('Failed to delete tasks!', { variant: 'error' });
-        }
+        deleteDoneTaskMutation.mutate();
+        enqueueSnackbar('Tasks deleted!', { variant: 'success' });
     };
 
     return (

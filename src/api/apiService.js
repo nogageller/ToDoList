@@ -54,3 +54,12 @@ export const deleteTask = async (id) => {
         throw error;
     }
 };
+
+export const deleteDoneTasks = async () => {
+    try {
+        await axios.delete(`/tasks/deleteDone`);
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        throw error;
+    }
+};

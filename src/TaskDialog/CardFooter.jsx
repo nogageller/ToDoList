@@ -1,13 +1,10 @@
 import React from 'react'
 import { useSnackbar } from 'notistack';
-import { v4 as uuidv4 } from 'uuid';
-import useTodos from '../hooks/useTodos';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTask, updateTask } from '../api/apiService';
 
 const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
 
-    const { tasks, setTasks } = useTodos({});
     const { enqueueSnackbar } = useSnackbar();
     const queryClient = useQueryClient();
 
@@ -37,8 +34,6 @@ const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
     
 
     const handleSave = (data) => {
-        saveTask(data);
-
         //convert the data to suitable json
         const { _id, id, ...taskWithoutId } = data;
         taskWithoutId.priority = Number(taskWithoutId.priority);
@@ -50,26 +45,11 @@ const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
         if (_id) {
             updateTaskMutation({ id: _id, updatedTask })
         } else {
-            createTaskMutation(jsonObject)
+            let newTask = {...jsonObject, isChecked: false};
+            createTaskMutation(newTask)
         }
 
         handleClose();
-    };
-
-    const saveTask = (updatedTask) => {
-        if (updatedTask._id) {
-            const updatedTasks = tasks.map((task) =>
-                task._id === updatedTask._id ? updatedTask : task
-            );
-            setTasks(updatedTasks);
-        }
-        else {
-            // Add new task
-            //updatedTask._id = uuidv4();
-            updatedTask.isChecked = false;
-            setTasks([...tasks, updatedTask]);
-        }
-        //enqueueSnackbar('Task saved successfully!', { variant: 'success' });
     };
 
     return (

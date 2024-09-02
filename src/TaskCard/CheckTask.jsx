@@ -2,9 +2,7 @@ import React from 'react'
 import { useSnackbar } from 'notistack';
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
-import useTodos from '../hooks/useTodos';
 import { makeStyles } from '@mui/styles';
-// import useFilterTodos from '../hooks/useFilterTodoss';
 import _ from 'lodash';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateTaskCompletion } from '../api/apiService';
@@ -21,12 +19,9 @@ const useStyles = makeStyles((theme) => ({
 const CheckTask = ({ task, className, setClassName }) => {
     const classes = useStyles();
 
-    const { tasks, setTasks } = useTodos({ keyBy: false });
     const { enqueueSnackbar } = useSnackbar();
     const queryClient = useQueryClient();
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-    //const { setFilterTasks } = useFilterTodos();
 
     const checkTaskMutation = useMutation({
         mutationFn: updateTaskCompletion,
@@ -43,26 +38,7 @@ const CheckTask = ({ task, className, setClassName }) => {
         if (className == 'unchecked') {
             enqueueSnackbar('Task checked!', { variant: 'success' });
         }
-        handleCheckTask()
-    }
-
-    const handleCheckTask = () => {
         checkTaskMutation.mutate(task);
-        const tasksKeyedBy = _.keyBy(tasks, 'id');
-        const taskId = task.id
-
-        if (tasksKeyedBy.hasOwnProperty(taskId)) {
-            const task = tasksKeyedBy[taskId];
-            const updatedTask = { ...task, isChecked: !task.isChecked };
-            const updatedTasksKeyedBy = {
-                ...tasksKeyedBy,
-                [taskId]: updatedTask
-            };
-            const updatedTasksArray = Object.values(updatedTasksKeyedBy);
-
-            setTasks(updatedTasksArray)
-            //setFilterTasks(updatedTasksArray);
-        }
     }
 
     return (
