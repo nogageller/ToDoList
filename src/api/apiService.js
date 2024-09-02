@@ -12,6 +12,17 @@ export const getTasks = async () => {
     }
 };
 
+export const getSubjects = async () => {
+    try {
+        const response = await axios.get('/subjects');
+        console.log('Fetched subjects:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        throw error;
+    }
+};
+
 export const createTask = async (task) => {
     try {
         const response = await axios.post('/tasks', task);

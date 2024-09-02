@@ -3,9 +3,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import useSubjects from '../hooks/useSubjects';
 
-const TaskSubjectInput = ({ register, setValue, editedTask, watch }) => {
+const TaskSubjectInput = ({ register, setValue, watch }) => {
 
-    const { subjectOptions } = useSubjects()
+    const { data: subjects } = useSubjects();
+    const subjectOptions = subjects?.map(subject => subject.name) || [];
 
     return (
         <div className='subjectInput'>

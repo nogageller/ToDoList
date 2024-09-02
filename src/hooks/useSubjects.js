@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useQuery } from '@tanstack/react-query';
+import { getSubjects } from '../api/apiService';
 
-export const useSubjects = () => {
-    const [subjectOptions] = useState(["Personal", "Work", "Study", "Shopping", "Health"]);
+const useSubjects = () => {
+    return useQuery({
+        queryKey: ['subjects'],
+        queryFn: getSubjects,
+        staleTime: 30000,
+        refetchOnWindowFocus: true,
+    });
+};
 
-    return {
-        subjectOptions,
-    };
-}
+export default useSubjects;
 
-export default useSubjects
