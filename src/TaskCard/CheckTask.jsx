@@ -6,6 +6,8 @@ import useTodos from '../hooks/useTodos';
 import { makeStyles } from '@mui/styles';
 // import useFilterTodos from '../hooks/useFilterTodoss';
 import _ from 'lodash';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateTaskCompletion } from '../api/apiService';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,9 +23,20 @@ const CheckTask = ({ task, className, setClassName }) => {
 
     const { tasks, setTasks } = useTodos({ keyBy: false });
     const { enqueueSnackbar } = useSnackbar();
+    const queryClient = useQueryClient();
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
     //const { setFilterTasks } = useFilterTodos();
 
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+    const checkTaskMutation = useMutation({
+        mutationFn: updateTaskCompletion,
+        onSuccess: () => {
+            queryClient.invalidateQueries(['tasks']);
+        },
+        onError: (error) => {
+            console.error('Error deleting task:', error);
+        },
+    });
 
     const toggleTask = () => {
         setClassName(className === 'unchecked' ? 'checked' : 'unchecked');
@@ -34,6 +47,7 @@ const CheckTask = ({ task, className, setClassName }) => {
     }
 
     const handleCheckTask = () => {
+        checkTaskMutation.mutate(task);
         const tasksKeyedBy = _.keyBy(tasks, 'id');
         const taskId = task.id
 
