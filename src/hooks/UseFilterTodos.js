@@ -1,22 +1,25 @@
 import { useAtom } from 'jotai';
-import useTodos from './useTodos';
 import { useMemo } from 'react';
 import { atom } from 'jotai';
+import useTasks from './useTasks';
 
 export const filterOptionsAtom = atom('');
 
 const useFilterTodos = () => {
-    const { tasks } = useTodos({ keyBy: false });
+    const { data: tasks = [], refetch, isFetching } = useTasks();
     const [filterOptions, setFilterOptions] = useAtom(filterOptionsAtom);
 
     const filterTasks = useMemo(() => {
+        
+        if (isFetching) return []; 
+
         switch (filterOptions) {
             case 'hideDone':
-                return tasks.filter(task => task.isChecked === false);
+                return tasks.filter(task => !task.isChecked);
             case 'showAll':
                 return [...tasks]
             case 'showDone':
-                return tasks.filter(task => task.isChecked === true);
+                return tasks.filter(task => task.isChecked);
             case 'search':
                 return tasks.filter(task => task.name.toLowerCase().includes(value.toLowerCase()))
             default:
@@ -28,12 +31,13 @@ const useFilterTodos = () => {
                 }
                 return [...tasks]
         }
-    }, [tasks, filterOptions]);
+    }, [tasks, filterOptions, isFetching]);
 
     return {
         filterTasks,
         filterOptions,
         setFilterOptions,
+        refetch,
     };
 }
 
