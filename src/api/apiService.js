@@ -1,10 +1,11 @@
 import axios from '../api/axios';
 
-
-export const getTasks = async () => {
+export const getTasks = async (filter = '') => {
     try {
-        const response = await axios.get('/tasks');
-        console.log('Fetched tasks:', response.data); 
+        const response = await axios.get('/tasks', {
+            params: { filter }
+        });
+        console.log('Fetched tasks:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);

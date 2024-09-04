@@ -6,25 +6,21 @@ import useTasks from './useTasks';
 export const filterOptionsAtom = atom('');
 
 const useFilterTodos = () => {
-    const { data: tasks = [], refetch, isFetching } = useTasks();
     const [filterOptions, setFilterOptions] = useAtom(filterOptionsAtom);
+    const { data: tasks = [], isFetching, refetch} = useTasks(filterOptions);
 
     const filterTasks = useMemo(() => {
-        
-        if (isFetching) return []; 
+
+        if (isFetching) return [];
 
         switch (filterOptions) {
-            case 'hideDone':
-                return tasks.filter(task => !task.isChecked);
             case 'showAll':
                 return [...tasks]
-            case 'showDone':
-                return tasks.filter(task => task.isChecked);
             case 'search':
                 return tasks.filter(task => task.name.toLowerCase().includes(value.toLowerCase()))
             default:
                 if (filterOptions.startsWith('search:')) {
-                    const searchTerm = filterOptions.substring(7); 
+                    const searchTerm = filterOptions.substring(7);
                     return tasks.filter(task =>
                         task.name.toLowerCase().includes(searchTerm.toLowerCase())
                     );
@@ -36,8 +32,8 @@ const useFilterTodos = () => {
     return {
         filterTasks,
         filterOptions,
-        setFilterOptions,
-        refetch,
+        isFetching,
+        setFilterOptions
     };
 }
 

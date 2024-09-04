@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { getTasks } from '../api/apiService'; 
 
-const useTasks = () => {
+const useTasks = (filter = '') => {
     return useQuery({
-        queryKey: ['tasks'], 
-        queryFn: getTasks, 
-        staleTime: 30000, 
-        refetchOnWindowFocus: true, 
+        queryKey: ['tasks', filter], 
+        queryFn: () => getTasks(filter), 
+        staleTime: 30000,
+        refetchOnWindowFocus: true,
     });
 };
 

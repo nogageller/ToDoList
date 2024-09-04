@@ -13,7 +13,7 @@ const TaskLists = () => {
             {filterTasks.length === 0 ? (
                 <div>No tasks found.</div>
             ) : (
-                filterTasks.map(task => (
+                    filterTasks.map(task => (
                     <React.Fragment key={task._id}>
                         <Task task={task} />
                     </React.Fragment>
