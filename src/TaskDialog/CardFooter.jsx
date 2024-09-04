@@ -31,8 +31,6 @@ const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
         },
     });
 
-    
-
     const handleSave = (data) => {
         //convert the data to suitable json
         const { _id, id, ...taskWithoutId } = data;
