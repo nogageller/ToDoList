@@ -17,7 +17,6 @@ const DeleteDoneBtn = () => {
         },
     });
 
-
     const handleDeleteDone = () => {
         deleteDoneTaskMutation.mutate();
         enqueueSnackbar('Tasks deleted!', { variant: 'success' });
