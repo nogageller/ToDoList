@@ -11,13 +11,15 @@ import { useForm } from 'react-hook-form';
 
 const TaskDialog = ({ open, handleClose, editedTask }) => {
 
+    const defaultTask = {
+        id: null,
+        name: '',
+        subject: '',
+        priority: 0,
+    }
+
     const { register, handleSubmit, control, setValue, watch, formState: { errors }, } = useForm({
-        defaultValues: editedTask || {
-            id: null,
-            name: '',
-            subject: '',
-            priority: 0,
-        },
+        defaultValues: editedTask || defaultTask,
     });
 
 

@@ -54,10 +54,6 @@ export const updateTaskCompletion = async (task) => {
 };
 
 export const deleteTask = async (id) => {
-    if (!id) {
-        console.log('There is no id');
-        throw new Error('ID is required to delete a task');
-    }
     try {
         await axios.delete(`/tasks/${id}`);
     } catch (error) {

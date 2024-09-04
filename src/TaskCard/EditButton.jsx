@@ -21,7 +21,7 @@ const EditButton = ({ task }) => {
             <IconButton
                 className='edit-button'
                 aria-label="delete"
-                onClick={() => handleDialogClickOpen(task)}
+                onClick={() => handleDialogClickOpen()}
                 sx={{ color: 'white' }}
             >
                 <EditIcon />
