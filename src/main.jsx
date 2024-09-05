@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import 'ol/ol.css';
 
 const queryClient = new QueryClient();
 

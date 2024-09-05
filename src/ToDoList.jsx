@@ -4,6 +4,7 @@ import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
 import SearchInput from './SearchInput';
 import FilterButtons from './FilterButtons/index';
+import MapComponent from './map/MapComponent';
 
 
 const ToDoList = () => {
@@ -28,7 +29,17 @@ const ToDoList = () => {
                 </div>
                 <button className='add-button' onClick={handleDialogClickOpen}>Add new task</button>
             </div>
-            <FilterButtons/>
+                    <FilterButtons />
+            <div><br></br></div>
+
+            <div className='bodyContainer'>
+                <div className='box1'>
+                    <TaskLists />
+                </div>
+                <div className='box2'>
+                    <MapComponent />
+                </div>
+            </div>
 
             {
                 open &&
@@ -38,9 +49,6 @@ const ToDoList = () => {
                 />
             }
 
-            <div><br></br></div>
-
-            <TaskLists />
 
         </div>
     )

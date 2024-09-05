@@ -28,8 +28,9 @@ const Task = ({ task }) => {
                     <br></br>
                 </div>
                 <div>
-                    <Typography>Subject: {task.subject}</Typography>
-                    <Typography>Priority: {task.priority}</Typography>
+                    <Typography variant="caption">Subject: {task.subject}</Typography>
+                    <br></br>
+                    <Typography variant="caption">Priority: {task.priority}</Typography>
                 </div>
             </div>
         </div >
