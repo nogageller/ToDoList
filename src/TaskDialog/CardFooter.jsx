@@ -3,12 +3,12 @@ import { useSnackbar } from 'notistack';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTask, updateTask } from '../api/apiService';
 
-const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
+const CardFooter = ({ editedTask, handleClose, handleSubmit, errors }) => {
 
     const { enqueueSnackbar } = useSnackbar();
     const queryClient = useQueryClient();
 
-    const { mutate: createTaskMutation, isError: deleteError, isSuccess: deleteSuccess } = useMutation({
+    const { mutate: createTaskMutation, isError: createError, isSuccess: createSuccess } = useMutation({
         mutationFn: createTask,
         onSuccess: () => {
             queryClient.invalidateQueries(['tasks']);
@@ -31,30 +31,51 @@ const CardFooter = ({ editedTask, handleClose, handleSubmit }) => {
         },
     });
 
-    const handleSave = (data) => {
-        //convert the data to suitable json
-        const { _id, id, ...taskWithoutId } = data;
-        taskWithoutId.priority = Number(taskWithoutId.priority);
-        const jsonString = JSON.stringify(taskWithoutId);
-        let replaceJson = jsonString.replace(/'/g, '"');
-        let jsonObject = JSON.parse(replaceJson);
-        let updatedTask = jsonObject
-
-        if (_id) {
-            updateTaskMutation({ id: _id, updatedTask })
-        } else {
-            let newTask = {...jsonObject, isChecked: false};
-            createTaskMutation(newTask)
+    const convertLocationToGeoJson = (location) => {
+        if (location) {
+            return {
+                type: 'Point',
+                coordinates: [location[0], location[1]]
+            };
         }
+        return null;
+    };
 
-        handleClose();
+    const prepareTaskData = (data) => {
+        const { _id, location, ...taskWithoutId } = data;
+        taskWithoutId.priority = Number(taskWithoutId.priority); 
+        const geoJsonLocation = convertLocationToGeoJson(location);
+        return {
+            _id,
+            ...taskWithoutId,
+            location: geoJsonLocation
+        };
+    };
+
+    const handleTaskMutation = (data) => {
+        const { _id, id, ...taskData } = data;
+        if (_id) {
+            updateTaskMutation({ id: _id, updatedTask: taskData });
+        } else {
+            createTaskMutation({ ...taskData, isChecked: false });
+        }
+    };
+
+    const handleSave = (data) => {
+        if (!data.location) {
+            return; 
+        }
+        const taskData = prepareTaskData(data);
+        handleTaskMutation(taskData);
+        handleClose(); 
     };
 
     return (
         <div>
             <button className='dialog-buttons' type='submit' onClick={handleSubmit(handleSave)}>{editedTask ? 'Save' : 'Add'}</button>
-            {deleteError && <p>Error adding task. Please try again.</p>}
-            {deleteSuccess && <p>Task added successfully!</p>}
+            {errors.location && <div className='error-message'>{errors.location.message}</div>}
+            {createError && <p>Error adding task. Please try again.</p>}
+            {createSuccess && <p>Task added successfully!</p>}
             <button className='dialog-buttons' type='button' onClick={handleClose}>Cancel</button>
         </div>
     )

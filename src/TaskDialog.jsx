@@ -8,6 +8,7 @@ import TaskSubjectInput from './TaskDialog/TaskSubjectInput';
 import TaskRatingInput from './TaskDialog/TaskRatingInput';
 import CardFooter from './TaskDialog/CardFooter';
 import { useForm } from 'react-hook-form';
+import MapComponent from './map/MapComponent';
 
 const TaskDialog = ({ open, handleClose, editedTask }) => {
 
@@ -16,12 +17,17 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
         name: '',
         subject: '',
         priority: 0,
+        location: null,
     }
 
     const { register, handleSubmit, control, setValue, watch, formState: { errors }, } = useForm({
         defaultValues: editedTask || defaultTask,
+        mode: 'onSubmit'
     });
 
+    const handleMapClick = (location) => {
+        setValue('location', location, { shouldValidate: true });
+    }
 
     return (
         <>
@@ -38,18 +44,20 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
                             setValue={setValue}
                             editedTask={editedTask}
                             watch={watch}
+                            errors={errors}
                         />
                         <TaskRatingInput
-                            register={register}
-                            setValue={setValue}
                             control={control}
                         />
+                        <MapComponent onMapClick={handleMapClick} />
+                        {errors.location && <div className='error-message'>{errors.location.message}</div>}
                         <div className='dialog-actions'>
                             <DialogActions>
                                 <CardFooter
                                     editedTask={editedTask}
                                     handleClose={handleClose}
                                     handleSubmit={handleSubmit}
+                                    errors={errors}
                                 />
                             </DialogActions>
                         </div>

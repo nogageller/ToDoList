@@ -2,16 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import { Map, View } from 'ol';
 import { OSM, Vector as VectorSource } from 'ol/source';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import 'ol/ol.css';
 import useFilterTodos from '../hooks/useFilterTodos';
 
-const MapComponent = () => {
+const MapComponent = ({ onMapClick }) => {
     const mapRef = useRef(); 
-    const { filterTasks, isFetching, error } = useFilterTodos();
-
+    const { filterTasks, isFetching } = useFilterTodos();
 
     useEffect(() => {
         if (mapRef.current && !isFetching) {
@@ -51,10 +50,23 @@ const MapComponent = () => {
             );
             vectorSource.addFeatures(features);
 
-            return () => map.setTarget(undefined); 
+            const handleMapClick = (event) => {
+                const coordinate = event.coordinate;
+                const lonLat = toLonLat(coordinate);
+                if (onMapClick) {
+                    onMapClick(lonLat);
+                }
+            };
+
+            map.on('click', handleMapClick);
+
+            return () => {
+                map.setTarget(undefined); 
+                map.un('click', handleMapClick); 
+            }
         }
 
-    }, [filterTasks, isFetching]);
+    }, [filterTasks, isFetching, onMapClick]);
 
     return (
         <div
