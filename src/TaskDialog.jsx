@@ -49,7 +49,7 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
                         <TaskRatingInput
                             control={control}
                         />
-                        <MapComponent onMapClick={handleMapClick} />
+                        <MapComponent onMapClick={handleMapClick} editedTask={editedTask}/>
                         {errors.location && <div className='error-message'>{errors.location.message}</div>}
                         <div className='dialog-actions'>
                             <DialogActions>

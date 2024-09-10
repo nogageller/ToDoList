@@ -37,7 +37,7 @@ const ToDoList = () => {
                     <TaskLists />
                 </div>
                 <div className='box2'>
-                    <MapComponent />
+                    <MapComponent editedTask={'currentTasks'}/>
                 </div>
             </div>
 
