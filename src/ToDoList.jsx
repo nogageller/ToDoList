@@ -4,7 +4,6 @@ import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
 import SearchInput from './SearchInput';
 import FilterButtons from './FilterButtons/index';
-import MapComponent from './map/MapComponent';
 import MapContainer from './MapContainer';
 
 

@@ -3,19 +3,17 @@ import { useLayer, useMap } from '../hooks/useMap'
 import { fromLonLat } from 'ol/proj';
 import BaseLayers from './layers/BaseLayers';
 import { Map, View } from 'ol';
-import { handleMapClick } from './mapUtils';
 
 const CreateMap = ({ children, onMapClick }) => {
 
     const { map, setMap } = useMap()
-    const { layer, setLayer} = useLayer()
+    const { layer } = useLayer()
     const mapRef = useRef();
+    const isMapCreated = useRef(false);
 
     useEffect(() => {
-        console.log("CreateMap rendered");
 
-
-        if (map) return;
+        if (isMapCreated.current) return
 
         const center = fromLonLat([45.0, 25.0]);
 
@@ -31,19 +29,19 @@ const CreateMap = ({ children, onMapClick }) => {
         })
 
         setMap(newMap)
+        isMapCreated.current = true;
 
-    }, [map]);
+    }, []);
 
     useEffect(() => {
         if (!map || !onMapClick) return;
-        console.log('layer: '+layer)
 
         let vectorSource;
-        if(layer){
+        if (layer) {
             vectorSource = layer.current
         }
 
-        const handleMapClickWrapper = (event) => handleMapClick(event, vectorSource, onMapClick);
+        const handleMapClickWrapper = (event) => onMapClick(event);
 
         map.on('click', handleMapClickWrapper);
 
@@ -51,10 +49,10 @@ const CreateMap = ({ children, onMapClick }) => {
             map.un('click', handleMapClickWrapper);
         }
 
-    })
+    }, [map])
 
     return (
-        <div ref={mapRef} style={{ width: '80%', height: '300px' }}>
+        <div ref={mapRef} style={{ width: '80%', height: '350px' }}>
             <BaseLayers>
                 {children}
             </BaseLayers>

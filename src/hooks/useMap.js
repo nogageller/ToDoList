@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai';
 
-export const mapAtom = atom('');
-export const layerAtom = atom('');
+export const mapAtom = atom();
+export const layerAtom = atom();
 
 export const useMap = () => {
     const [map, setMap] = useAtom(mapAtom);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useMap } from '../../hooks/useMap'
 import { OSM } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';

@@ -1,13 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Style, Circle as CircleStyle, Fill, Stroke } from 'ol/style';
 import VectorSource from 'ol/source/Vector';
-import { useLayer, useMap } from '../../hooks/useMap';
+import { useMap } from '../../hooks/useMap';
 
-const TaskLayer = ({ features }) => {
+const AddFeatureLayer = ({ features }) => {
 
     const { map } = useMap()
-    const { layer, setLayer} = useLayer()
     const vectorSource = useRef(new VectorSource({ features: [] }));
 
     useEffect(() => {
@@ -26,8 +25,6 @@ const TaskLayer = ({ features }) => {
             });
 
             map.addLayer(vectorLayer);
-            setLayer(vectorLayer);
-            console.log(layer)
 
             if(features){
                 vectorSource.current.clear(); 
@@ -46,4 +43,4 @@ const TaskLayer = ({ features }) => {
     return null;
 };
 
-export default TaskLayer;
+export default AddFeatureLayer;

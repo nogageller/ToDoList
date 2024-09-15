@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,16 +8,10 @@ import TaskSubjectInput from './TaskDialog/TaskSubjectInput';
 import TaskRatingInput from './TaskDialog/TaskRatingInput';
 import CardFooter from './TaskDialog/CardFooter';
 import { useForm } from 'react-hook-form';
-import MapComponent from './map/MapComponent';
-import { convertToFeatures } from './map/featureUtils';
-import CreateMap from './map/CreateMap';
-import MapClickHandler from './map/MapClickHandler';
-import TaskLayer from './map/layers/TaskLayer';
 import { Provider } from 'jotai';
+import MapDialog from './map/MapDialog';
 
 const TaskDialog = ({ open, handleClose, editedTask }) => {
-
-    // const [features, setFeatures] = useState()
 
     const defaultTask = {
         id: null,
@@ -31,17 +25,6 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
         defaultValues: editedTask || defaultTask,
         mode: 'onSubmit'
     });
-
-    const handleMapClick = (location) => {
-        setValue('location', location, { shouldValidate: true });
-    }
-
-    let features;
-
-    if (editedTask) {
-        features = convertToFeatures([editedTask]);
-        // setFeatures(feature);
-    }
 
     return (
         <>
@@ -64,7 +47,7 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
                             <TaskRatingInput
                                 control={control}
                             />
-
+                            <MapDialog editedTask={editedTask} setValue={setValue} />
 
                             {errors.location && <div className='error-message'>{errors.location.message}</div>}
                             <div className='dialog-actions'>
@@ -77,9 +60,6 @@ const TaskDialog = ({ open, handleClose, editedTask }) => {
                                     />
                                 </DialogActions>
                             </div>
-                            <CreateMap onMapClick={handleMapClick}>
-                                <TaskLayer features={features || undefined} />
-                            </CreateMap>
                         </form>
                     </DialogContent>
                 </Dialog>

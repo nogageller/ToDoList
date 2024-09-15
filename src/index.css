@@ -280,3 +280,9 @@ ol {
 .map {
   width: 1500px;
 }
+
+.mapDialogContainer{
+  display: flex;
+  justify-content: center;
+  width: 550px;
+}

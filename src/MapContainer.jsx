@@ -1,19 +1,15 @@
-import React, { useRef } from 'react'
-import MapComponent from './map/MapComponent'
+import React from 'react'
 import useFilterTodos from './hooks/useFilterTodos';
-import { convertToFeatures } from './map/featureUtils';
 import CreateMap from './map/CreateMap';
-import TaskLayer from './map/layers/TaskLayer';
-import VectorSource from 'ol/source/Vector';
+import ConvertToFeatures from './map/ConvertToFeatures';
 
 const MapContainer = () => {
 
     const { filterTasks, isFetching } = useFilterTodos();
-    const features = !isFetching ? convertToFeatures(filterTasks) : [];
 
     return (
         <CreateMap>
-            <TaskLayer features={features} />
+            <ConvertToFeatures array={filterTasks} isFetching={isFetching}/>
         </CreateMap>
     )
 }
