@@ -5,6 +5,7 @@ import TaskLists from './TaskLists';
 import SearchInput from './SearchInput';
 import FilterButtons from './FilterButtons/index';
 import MapComponent from './map/MapComponent';
+import MapContainer from './MapContainer';
 
 
 const ToDoList = () => {
@@ -37,7 +38,7 @@ const ToDoList = () => {
                     <TaskLists />
                 </div>
                 <div className='box2'>
-                    <MapComponent editedTask={'currentTasks'}/>
+                    <MapContainer/>
                 </div>
             </div>
 

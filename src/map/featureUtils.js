@@ -14,3 +14,11 @@ export const updateFeatures = (vectorSource, filterTasks, editedTask) => {
         vectorSource.addFeatures(feature);
     }
 };
+
+export const convertToFeatures = (array) => {
+    const geoJSONFormat = new GeoJSON();
+    const features = array.flatMap(task =>
+        task.location ? geoJSONFormat.readFeatures(task.location, { featureProjection: 'EPSG:3857' }) : []
+    );
+    return features
+}

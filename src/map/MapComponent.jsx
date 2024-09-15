@@ -4,8 +4,9 @@ import 'ol/ol.css';
 import useFilterTodos from '../hooks/useFilterTodos';
 import { handleMapClick, initializeMap } from './mapUtils';
 import { updateFeatures } from './featureUtils';
+import GeoJSON from 'ol/format/GeoJSON';
 
-const MapComponent = ({ onMapClick, editedTask }) => {
+const MapComponent = ({ onMapClick, features }) => {
     const mapRef = useRef();
     const vectorSource = useRef(new VectorSource({ features: [] }));
     const mapRefInstance = useRef();
@@ -18,11 +19,16 @@ const MapComponent = ({ onMapClick, editedTask }) => {
             mapRefInstance.current = initializeMap(mapRef.current, vectorSource.current);
         }
 
-        updateFeatures(vectorSource.current, filterTasks, editedTask);
+        if(features){
+            if(features.length != 1){
+                vectorSource.current.clear();   
+            }
+            vectorSource.current.addFeatures(features);
+        }
 
         const handleMapClickWrapper = (event) => handleMapClick(event, vectorSource.current, onMapClick);
 
-        if (editedTask != 'currentTasks'){
+        if (onMapClick){
             mapRefInstance.current.on('click', handleMapClickWrapper);
         }
 
@@ -32,7 +38,7 @@ const MapComponent = ({ onMapClick, editedTask }) => {
             }
         }
 
-    }, [filterTasks, isFetching, onMapClick, editedTask]);
+    }, [filterTasks, isFetching, onMapClick]);
 
     return (
         <div
