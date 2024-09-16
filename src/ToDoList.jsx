@@ -6,7 +6,6 @@ import SearchInput from './SearchInput';
 import FilterButtons from './FilterButtons/index';
 import MapContainer from './MapContainer';
 
-
 const ToDoList = () => {
 
     const [open, setOpen] = useState(false);
@@ -40,7 +39,6 @@ const ToDoList = () => {
                     <MapContainer/>
                 </div>
             </div>
-
             {
                 open &&
                 <TaskDialog
@@ -48,8 +46,6 @@ const ToDoList = () => {
                     handleClose={handleDialogClose}
                 />
             }
-
-
         </div>
     )
 }

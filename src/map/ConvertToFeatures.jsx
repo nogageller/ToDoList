@@ -5,15 +5,30 @@ import GeoJSON from 'ol/format/GeoJSON';
 const ConvertToFeatures = ({ array, isFetching }) => {
 
   const convertToFeatures = (array) => {
-    if (array[0]) {
-      const geoJSONFormat = new GeoJSON();
-      const geoFeatures = array.flatMap(task =>
-        task.location ? geoJSONFormat.readFeatures(task.location, { featureProjection: 'EPSG:3857' }) : []
-      );
-      return geoFeatures
+    if (!array || !Array.isArray(array)) {
+      console.error('Invalid input: Expected an array.');
+      return [];
     }
-    return;
-  }
+
+    const geoJSONFormat = new GeoJSON();
+
+    return array.flatMap(task => {
+      if (task && task.location) {
+        try {
+          const geoJsonLocation = {
+            type: 'Feature',
+            geometry: task.location,
+          };
+
+          return geoJSONFormat.readFeatures(geoJsonLocation, { featureProjection: 'EPSG:3857' });
+        } catch (error) {
+          console.error('Error reading GeoJSON feature:', error);
+          return [];
+        }
+      }
+      return [];
+    });
+  };
 
   const updateFeatures = !isFetching ? convertToFeatures(array) : [];
 

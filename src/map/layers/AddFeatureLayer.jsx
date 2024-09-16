@@ -12,32 +12,30 @@ const AddFeatureLayer = ({ features }) => {
     useEffect(() => {
         if (!map) return;
 
-        if (map && vectorSource) {
-            const vectorLayer = new VectorLayer({
-                source: vectorSource.current,
-                style: new Style({
-                    image: new CircleStyle({
-                        radius: 7,
-                        fill: new Fill({ color: 'pink' }),
-                        stroke: new Stroke({ color: 'black', width: 1.5 }),
-                    }),
+        const vectorLayer = new VectorLayer({
+            source: vectorSource.current,
+            style: new Style({
+                image: new CircleStyle({
+                    radius: 7,
+                    fill: new Fill({ color: 'pink' }),
+                    stroke: new Stroke({ color: 'black', width: 1.5 }),
                 }),
-            });
+            }),
+        });
 
-            map.addLayer(vectorLayer);
+        map.addLayer(vectorLayer);
 
-            if(features){
-                vectorSource.current.clear(); 
-                vectorSource.current.addFeatures(features); 
-            }
-
-            return () => {
-                if (vectorLayer.current) {
-                    map.removeLayer(vectorLayer.current);
-                }
-            };
-
+        if (features) {
+            vectorSource.current.clear();
+            vectorSource.current.addFeatures(features);
         }
+
+        return () => {
+            if (vectorLayer.current) {
+                map.removeLayer(vectorLayer.current);
+            }
+        };
+
     }, [map, features]);
 
     return null;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import CreateMap from './CreateMap'
-import TaskLayer from './layers/AddFeatureLayer';
 import AddFeatureLayer from './layers/AddFeatureLayer';
 import ConvertToFeatures from './ConvertToFeatures';
 import { toLonLat } from 'ol/proj';
@@ -12,19 +11,21 @@ import { Point } from 'ol/geom';
 const MapDialog = ({ editedTask, setValue }) => {
 
     const [editedTaskState, setEditedTaskState] = useState(editedTask);
+    const [newFeatures, setNewFeatures] = useState([]);
 
     const handleMapClick = (event) => {
         const coordinate = event.coordinate;
         const lonLat = toLonLat(coordinate);
+
         setValue('location', lonLat, { shouldValidate: true });
+
         if (editedTask) {
             editedTask.location = lonLat;
-            editedTask = convertLocationToGeoJson(editedTask)
-            setEditedTaskState(editedTask)
+            setEditedTaskState(convertLocationToGeoJson(editedTask));
         }
         else {
             const newCircleFeature = addNewCircle(coordinate);
-            <AddFeatureLayer features={newCircleFeature} />
+            setNewFeatures([newCircleFeature]);
         }
     }
 
@@ -40,11 +41,16 @@ const MapDialog = ({ editedTask, setValue }) => {
                 stroke: new Stroke({ color: 'pink', width: 2 }),
             }),
         }));
+
+        return circleFeature;
     }
 
 
     const convertLocationToGeoJson = (task) => {
         if (task && task.location) {
+            if (task.location.type === 'Point' && Array.isArray(task.location.coordinates) && task.location.coordinates.length === 2) {
+                return task;
+            }
             return {
                 ...task,
                 location: {
@@ -58,7 +64,7 @@ const MapDialog = ({ editedTask, setValue }) => {
 
     useEffect(() => {
         if (editedTask && editedTask.location) {
-            <ConvertToFeatures array={[editedTaskState]} />
+            setEditedTaskState(convertLocationToGeoJson(editedTask));
         }
     }, [editedTask]);
 
@@ -66,6 +72,7 @@ const MapDialog = ({ editedTask, setValue }) => {
         <div className='mapDialogContainer'>
             <CreateMap onMapClick={handleMapClick}>
                 <ConvertToFeatures array={[editedTaskState]} />
+                <AddFeatureLayer features={newFeatures} />
             </CreateMap>
         </div>
 
