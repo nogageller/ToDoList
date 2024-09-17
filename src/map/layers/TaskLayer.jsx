@@ -1,8 +1,8 @@
 import React from 'react'
-import AddFeatureLayer from './layers/AddFeatureLayer';
+import AddFeatureLayer from './AddFeatureLayer';
 import GeoJSON from 'ol/format/GeoJSON';
 
-const ConvertToFeatures = ({ array, isFetching }) => {
+const TaskLayer = ({ array, isFetching }) => {
 
   const convertToFeatures = (array) => {
     if (!array || !Array.isArray(array)) {
@@ -39,4 +39,4 @@ const ConvertToFeatures = ({ array, isFetching }) => {
   )
 }
 
-export default ConvertToFeatures
+export default TaskLayer

@@ -1,7 +1,7 @@
 import React from 'react'
 import useFilterTodos from './hooks/useFilterTodos';
 import CreateMap from './map/CreateMap';
-import ConvertToFeatures from './map/ConvertToFeatures';
+import TaskLayer from './map/layers/TaskLayer';
 
 const MapContainer = () => {
 
@@ -9,7 +9,7 @@ const MapContainer = () => {
 
     return (
         <CreateMap>
-            <ConvertToFeatures array={filterTasks} isFetching={isFetching}/>
+            <TaskLayer array={filterTasks} isFetching={isFetching} />
         </CreateMap>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CreateMap from './CreateMap'
 import AddFeatureLayer from './layers/AddFeatureLayer';
-import ConvertToFeatures from './ConvertToFeatures';
+import TaskLayer from './layers/TaskLayer';
 import { toLonLat } from 'ol/proj';
 import { Feature } from 'ol';
 import { Fill, Stroke, Style } from 'ol/style';
@@ -71,7 +71,7 @@ const MapDialog = ({ editedTask, setValue }) => {
     return (
         <div className='mapDialogContainer'>
             <CreateMap onMapClick={handleMapClick}>
-                <ConvertToFeatures array={[editedTaskState]} />
+                <TaskLayer array={[editedTaskState]} />
                 <AddFeatureLayer features={newFeatures} />
             </CreateMap>
         </div>

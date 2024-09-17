@@ -3,6 +3,7 @@ import { Vector as VectorLayer } from 'ol/layer';
 import { Style, Circle as CircleStyle, Fill, Stroke } from 'ol/style';
 import VectorSource from 'ol/source/Vector';
 import { useMap } from '../../hooks/useMap';
+import { createFeatureStyle } from '../style/mapStyle';
 
 const AddFeatureLayer = ({ features }) => {
 
@@ -14,13 +15,7 @@ const AddFeatureLayer = ({ features }) => {
 
         const vectorLayer = new VectorLayer({
             source: vectorSource.current,
-            style: new Style({
-                image: new CircleStyle({
-                    radius: 7,
-                    fill: new Fill({ color: 'pink' }),
-                    stroke: new Stroke({ color: 'black', width: 1.5 }),
-                }),
-            }),
+            style: createFeatureStyle(),
         });
 
         map.addLayer(vectorLayer);

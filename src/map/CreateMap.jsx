@@ -41,12 +41,10 @@ const CreateMap = ({ children, onMapClick }) => {
             vectorSource = layer.current
         }
 
-        const handleMapClickWrapper = (event) => onMapClick(event);
-
-        map.on('click', handleMapClickWrapper);
+        map.on('click', onMapClick);
 
         return () => {
-            map.un('click', handleMapClickWrapper);
+            map.un('click', onMapClick);
         }
 
     }, [map])
