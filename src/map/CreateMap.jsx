@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useLayer, useMap } from '../hooks/useMap'
-import { fromLonLat } from 'ol/proj';
+import { useGeographic } from 'ol/proj';
 import BaseLayers from './layers/BaseLayers';
 import { Map, View } from 'ol';
 
@@ -15,11 +15,11 @@ const CreateMap = ({ children, onMapClick }) => {
 
         if (isMapCreated.current) return
 
-        const center = fromLonLat([45.0, 25.0]);
+        useGeographic();
 
         const newMap = new Map({
             view: new View({
-                center: center,
+                center: [45.0, 25.0],
                 zoom: 1,
                 minZoom: 2,
                 maxZoom: 10,

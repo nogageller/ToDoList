@@ -1,7 +1,7 @@
 import React from 'react'
-import useFilterTodos from './hooks/useFilterTodos';
-import CreateMap from './map/CreateMap';
-import TaskLayer from './map/layers/TaskLayer';
+import useFilterTodos from '../hooks/useFilterTodos';
+import CreateMap from './CreateMap';
+import TaskLayer from './layers/TaskLayer';
 
 const MapContainer = () => {
 

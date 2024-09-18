@@ -7,3 +7,11 @@ export const createFeatureStyle = () => new Style({
         stroke: new Stroke({ color: 'black', width: 1.5 }),
     }),
 });
+
+export const circleStyle = () => new Style({
+    image: new CircleStyle({
+        radius: 10,
+        fill: new Fill({ color: 'black' }),
+        stroke: new Stroke({ color: 'pink', width: 2 }),
+    }),
+});

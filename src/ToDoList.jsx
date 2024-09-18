@@ -4,7 +4,7 @@ import TaskDialog from './TaskDialog';
 import TaskLists from './TaskLists';
 import SearchInput from './SearchInput';
 import FilterButtons from './FilterButtons/index';
-import MapContainer from './MapContainer';
+import MapContainer from './map/MapContainer';
 
 const ToDoList = () => {
 

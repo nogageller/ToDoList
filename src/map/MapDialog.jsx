@@ -4,9 +4,8 @@ import AddFeatureLayer from './layers/AddFeatureLayer';
 import TaskLayer from './layers/TaskLayer';
 import { toLonLat } from 'ol/proj';
 import { Feature } from 'ol';
-import { Fill, Stroke, Style } from 'ol/style';
-import CircleStyle from 'ol/style/Circle';
 import { Point } from 'ol/geom';
+import { circleStyle } from './style/mapStyle';
 
 const MapDialog = ({ editedTask, setValue }) => {
 
@@ -34,13 +33,7 @@ const MapDialog = ({ editedTask, setValue }) => {
             geometry: new Point(coordinate),
         });
 
-        circleFeature.setStyle(new Style({
-            image: new CircleStyle({
-                radius: 10,
-                fill: new Fill({ color: 'black' }),
-                stroke: new Stroke({ color: 'pink', width: 2 }),
-            }),
-        }));
+        circleFeature.setStyle(circleStyle());
 
         return circleFeature;
     }
