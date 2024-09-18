@@ -5,7 +5,7 @@ import VectorSource from 'ol/source/Vector';
 import { useMap } from '../../hooks/useMap';
 import { createFeatureStyle } from '../style/mapStyle';
 
-const AddFeatureLayer = ({ features }) => {
+const AddFeatureLayer = ({ features, style }) => {
 
     const { map } = useMap()
     const vectorSource = useRef(new VectorSource({ features: [] }));
@@ -15,7 +15,7 @@ const AddFeatureLayer = ({ features }) => {
 
         const vectorLayer = new VectorLayer({
             source: vectorSource.current,
-            style: createFeatureStyle(),
+            style: createFeatureStyle() || style,
         });
 
         map.addLayer(vectorLayer);
