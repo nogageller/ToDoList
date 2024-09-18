@@ -65,7 +65,7 @@ const MapDialog = ({ editedTask, setValue }) => {
         <div className='mapDialogContainer'>
             <CreateMap onMapClick={handleMapClick}>
                 <TaskLayer array={[editedTaskState]} />
-                <AddFeatureLayer features={newFeatures} />
+                {newFeatures.length > 0 && <AddFeatureLayer features={newFeatures} />}
             </CreateMap>
         </div>
 

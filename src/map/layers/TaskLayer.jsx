@@ -34,7 +34,7 @@ const TaskLayer = ({ array, isFetching }) => {
 
   return (
     <div>
-      <AddFeatureLayer features={updateFeatures}></AddFeatureLayer>
+      <AddFeatureLayer features={updateFeatures} />
     </div>
   )
 }

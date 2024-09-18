@@ -20,7 +20,7 @@ const AddFeatureLayer = ({ features }) => {
 
         map.addLayer(vectorLayer);
 
-        if (features) {
+        if (features.length) {
             vectorSource.current.clear();
             vectorSource.current.addFeatures(features);
         }
